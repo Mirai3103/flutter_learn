@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learn/features/auth/pages/login.dart';
+import 'package:flutter_learn/features/cart/pages/cart_page.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
 import 'package:flutter_learn/features/products/pages/product_detail_page.dart';
@@ -20,6 +21,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => ProductDetailPage(product: product),
         );
+      case RouteNames.cart:
+        // Import CartPage here to avoid circular dependency
+        return MaterialPageRoute(builder: (context) => const CartPage());
       default:
         return MaterialPageRoute(
           builder: (context) =>
