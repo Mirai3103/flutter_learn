@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
-import 'package:flutter_learn/features/products/pages/widgets/product_cart.dart';
+import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage>
         childAspectRatio: 0.7,
       ),
       itemCount: products.length,
-      itemBuilder: (context, index) => ProductCart(product: products[index]),
+      itemBuilder: (context, index) => ProductCard(product: products[index]),
     );
   }
 }
