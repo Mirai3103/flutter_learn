@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:flutter_learn/routes/router.dart';
 
@@ -9,7 +11,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return BlocProvider(
+      create: (context) => CartBloc(),
+      child:  MaterialApp(
           navigatorKey: navigatorKey,
           title: 'Flutter Demo',
           theme: ThemeData(
@@ -17,6 +21,7 @@ class App extends StatelessWidget {
           ),
           onGenerateRoute: AppRouter.generateRoute,
           initialRoute: RouteNames.home,
-        );
+        ),
+    );
   }
 }

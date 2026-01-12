@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
+import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/routes/route_names.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductDetailPage extends StatelessWidget {
   final ProductModel product;
 
@@ -110,10 +112,13 @@ class ProductDetailPage extends StatelessWidget {
   }
 
   Widget _buildAddToCartButton(BuildContext context) {
+    final cartBloc = context.read<CartBloc>();
+    
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: () {
+          cartBloc.add(CartItemAdded(product));
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('${product.title} added to cart'),

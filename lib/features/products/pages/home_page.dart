@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
+import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
+import 'package:flutter_learn/routes/route_names.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, this.productService});
@@ -37,7 +41,33 @@ class _HomePageState extends State<HomePage>
               IconButton(
                 icon: const Icon(Icons.shopping_cart_outlined),
                 onPressed: () {
-                  print("cart");
+                  Navigator.pushNamed(context, RouteNames.cart);
+                },
+              ),
+              BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  if (state is CartLoaded && state.items.isNotEmpty) {
+                    return Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          '${state.items.length}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
                 },
               ),
             ],
@@ -86,7 +116,6 @@ class _HomePageState extends State<HomePage>
                 icon: const Icon(Icons.clear),
                 onPressed: () {
                   _searchController.clear();
-            
                 },
               )
             : null,
@@ -98,8 +127,7 @@ class _HomePageState extends State<HomePage>
         fillColor: Colors.grey[100],
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
-      onChanged: (value) {
-      },
+      onChanged: (value) {},
     );
   }
 
