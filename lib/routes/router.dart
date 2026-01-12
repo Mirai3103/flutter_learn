@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learn/features/auth/pages/login.dart';
+import 'package:flutter_learn/features/products/pages/home_page.dart';
+import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 
 class AppRouter {
@@ -8,7 +10,7 @@ class AppRouter {
       case RouteNames.home:
         return MaterialPageRoute(
           builder: (context) =>
-              const Scaffold(body: Center(child: Text('Home Page'))),
+              HomePage(productService: ProductService(),),
         );
       case RouteNames.login:
         return MaterialPageRoute(
