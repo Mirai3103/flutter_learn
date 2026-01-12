@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learn/features/auth/pages/login.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 
 class AppRouter {
@@ -12,7 +13,7 @@ class AppRouter {
       case RouteNames.login:
         return MaterialPageRoute(
           builder: (context) =>
-              const Scaffold(body: Center(child: Text('Login Page'))),
+              const LoginPage(),
         );
       default:
         return MaterialPageRoute(
