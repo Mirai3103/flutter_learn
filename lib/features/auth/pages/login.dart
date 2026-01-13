@@ -36,45 +36,59 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    if (state is Authenticated) {
-                      final authState = state;
-
-                      // Navigate to home page or show success message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Welcome back! ${authState.user.username}',
-                          ),
-                        ),
+                _buildBlocListener(),
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    if (state is AuthLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                      Navigator.of(context).pushNamed(RouteNames.home);
-                    } else if (state is AuthError) {
-                      // Show error message
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text(state.message)));
                     }
-                  },
-                  child: const SizedBox.shrink(),
-                ),
-                const SizedBox(height: 60),
-                _buildHeader(),
-                const SizedBox(height: 48),
-                _buildUsernameField(),
-                const SizedBox(height: 20),
-                _buildPasswordField(),
-                const SizedBox(height: 32),
-                _buildLoginButton(),
+                    return Column(
+                      children: [
+                        const SizedBox(height: 60),
+                        _buildHeader(),
+                        const SizedBox(height: 48),
+                        _buildUsernameField(),
+                        const SizedBox(height: 20),
+                        _buildPasswordField(),
+                        const SizedBox(height: 32),
+                        _buildLoginButton(),
 
-                const SizedBox(height: 24),
-                _buildGoogleLoginButton(),
+                        const SizedBox(height: 24),
+                        _buildGoogleLoginButton(),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBlocListener() {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        print("Auth State Changed: $state");
+        if (state is Authenticated) {
+          final authState = state;
+
+          // Navigate to home page or show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Welcome back! ${authState.user.username}')),
+          );
+          Navigator.of(context).pushNamed(RouteNames.home);
+        } else if (state is AuthError) {
+          // Show error message
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
+        }
+      },
+      child: const SizedBox.shrink(),
     );
   }
 
@@ -150,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildLoginButton() {
     return FilledButton(
-      onPressed: () {},
+      onPressed: _handleLogin,
       style: FilledButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -166,7 +180,6 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       final username = _usernameController.text.trim();
       final password = _passwordController.text.trim();
-
       context.read<AuthBloc>().add(
         LoginEvent(username: username, password: password),
       );

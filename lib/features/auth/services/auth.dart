@@ -25,7 +25,7 @@ class AuthService {
     await Future.delayed(const Duration(milliseconds: 500));
   }
   Future<UserModel?> getCurrentUser(String username) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
     return _users[username];
   }
 }

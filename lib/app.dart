@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/auth/services/auth.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
+import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:flutter_learn/routes/router.dart';
@@ -16,7 +17,13 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CartBloc()),
-        BlocProvider(create: (context) => AuthBloc(AuthService())),
+        BlocProvider(
+          create: (context) {
+            final authBloc = AuthBloc(AuthService());
+            authBloc.add(RecoverSessionEvent());
+            return authBloc;
+          },
+        ),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
