@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/auth/services/auth.dart';
+import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:flutter_learn/routes/router.dart';
@@ -11,17 +13,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartBloc(),
-      child:  MaterialApp(
-          navigatorKey: navigatorKey,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          onGenerateRoute: AppRouter.generateRoute,
-          initialRoute: RouteNames.home,
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CartBloc()),
+        BlocProvider(create: (context) => AuthBloc(AuthService())),
+      ],
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        title: 'Flutter Demo',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        onGenerateRoute: AppRouter.generateRoute,
+        initialRoute: RouteNames.home,
+      ),
     );
   }
 }
