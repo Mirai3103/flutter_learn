@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learn/features/auth/pages/login.dart';
+import 'package:flutter_learn/features/auth/widgets/AuthGuard.dart';
 import 'package:flutter_learn/features/cart/pages/cart_page.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
@@ -14,7 +15,7 @@ class AppRouter {
     switch (settings.name) {
       case RouteNames.home:
         return MaterialPageRoute(
-          builder: (context) => HomePage(productService: ProductService()),
+          builder: (context) => WithAuthGuard(child: HomePage(productService: ProductService())),
         );
       case RouteNames.login:
         return MaterialPageRoute(builder: (context) => const LoginPage());
@@ -23,11 +24,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider(
             create: (context) => ProductDetailVm(),
-            child: ProductDetailPage(product: product),
+            child: WithAuthGuard(child: ProductDetailPage(product: product)),
           ),
         );
       case RouteNames.cart:
-        return MaterialPageRoute(builder: (context) => const CartPage());
+        return MaterialPageRoute(builder: (context) => WithAuthGuard(child: const CartPage()));
       default:
         return MaterialPageRoute(
           builder: (context) =>

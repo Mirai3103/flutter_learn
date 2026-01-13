@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/bloc/auth.bloc.dart';
+import 'package:flutter_learn/features/bloc/auth.event.dart';
+import 'package:flutter_learn/features/bloc/auth.state.dart';
+import 'package:flutter_learn/routes/route_names.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,6 +36,29 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is Authenticated) {
+                      final authState = state;
+
+                      // Navigate to home page or show success message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Welcome back! ${authState.user.username}',
+                          ),
+                        ),
+                      );
+                      Navigator.of(context).pushNamed(RouteNames.home);
+                    } else if (state is AuthError) {
+                      // Show error message
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                    }
+                  },
+                  child: const SizedBox.shrink(),
+                ),
                 const SizedBox(height: 60),
                 _buildHeader(),
                 const SizedBox(height: 48),
@@ -136,7 +164,12 @@ class _LoginPageState extends State<LoginPage> {
 
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
-      // todo: login
+      final username = _usernameController.text.trim();
+      final password = _passwordController.text.trim();
+
+      context.read<AuthBloc>().add(
+        LoginEvent(username: username, password: password),
+      );
     }
   }
 

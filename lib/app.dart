@@ -23,7 +23,7 @@ class App extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(primarySwatch: Colors.blue),
         onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: RouteNames.home,
+        initialRoute: RouteNames.login,
       ),
     );
   }
