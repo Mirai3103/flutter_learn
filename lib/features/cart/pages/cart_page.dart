@@ -5,6 +5,7 @@ import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
 import 'package:flutter_learn/features/cart/models/cart_item_model.dart';
 import 'package:flutter_learn/features/cart/pages/widgets/cart_item.dart';
+import 'package:go_router/go_router.dart';
 
 
 class CartPage extends StatelessWidget {
@@ -165,13 +166,13 @@ class CartPage extends StatelessWidget {
         content: const Text('Are you sure you want to remove all items from your cart?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () =>  context.pop(),
             child: const Text('Cancel'),
           ),
           FilledButton(
             onPressed: () {
               context.read<CartBloc>().add(const CartCleared());
-              Navigator.of(context).pop();
+              context.pop();
             },
             child: const Text('Clear'),
           ),

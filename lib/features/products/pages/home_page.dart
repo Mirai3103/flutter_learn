@@ -9,6 +9,7 @@ import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/routes/route_names.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, this.productService});
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage>
               IconButton(
                 icon: const Icon(Icons.shopping_cart_outlined),
                 onPressed: () {
-                  Navigator.pushNamed(context, RouteNames.cart);
+                  context.push(RouteNames.cart);
                 },
               ),
               BlocBuilder<CartBloc, CartState>(

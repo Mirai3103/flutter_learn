@@ -7,6 +7,7 @@ import 'package:flutter_learn/features/products/pages/widgets/quantity_selector.
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductModel product;
@@ -49,7 +50,7 @@ class ProductDetailPage extends StatelessWidget {
       pinned: true,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => context.pop(),
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: Image.network(

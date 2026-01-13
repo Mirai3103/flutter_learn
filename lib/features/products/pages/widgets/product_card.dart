@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/routes/route_names.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -10,9 +11,8 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(
-          context,
-        ).pushNamed(RouteNames.productDetail, arguments: product);
+  
+        context.push(RouteNames.productDetail, extra: product);
       },
       borderRadius: BorderRadius.circular(12),
       child: Card(

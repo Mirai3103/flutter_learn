@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.state.dart';
+import 'package:flutter_learn/routes/route_names.dart';
+import 'package:go_router/go_router.dart';
 
 class WithAuthGuard extends StatelessWidget {
   final Widget child;
@@ -14,13 +16,9 @@ class WithAuthGuard extends StatelessWidget {
       listener: (context, state) {
         switch (state) {
           case Unauthenticated():
-            Navigator.of(
-              context,
-            ).pushNamedAndRemoveUntil('/login', (route) => false);
+            context.go(RouteNames.login);
           case AuthError():
-            Navigator.of(
-              context,
-            ).pushNamedAndRemoveUntil('/login', (route) => false);
+            context.go(RouteNames.login);
           default:
             break;
         }

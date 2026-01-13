@@ -4,6 +4,7 @@ import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/bloc/auth.state.dart';
 import 'package:flutter_learn/routes/route_names.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Welcome back! ${authState.user.username}')),
           );
-          Navigator.of(context).pushNamed(RouteNames.home);
+          context.go(RouteNames.home);
         } else if (state is AuthError) {
           // Show error message
           ScaffoldMessenger.of(

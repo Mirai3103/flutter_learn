@@ -4,10 +4,7 @@ import 'package:flutter_learn/features/auth/services/auth.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
-import 'package:flutter_learn/routes/route_names.dart';
-import 'package:flutter_learn/routes/router.dart';
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+import 'package:flutter_learn/routes/router.dart'; // nơi có createRouter()
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,21 +13,26 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => CartBloc()),
+        BlocProvider(create: (_) => CartBloc()),
         BlocProvider(
-          create: (context) {
+          create: (_) {
             final authBloc = AuthBloc(AuthService());
             authBloc.add(RecoverSessionEvent());
             return authBloc;
           },
         ),
       ],
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Flutter Demo',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: RouteNames.login,
+      child: Builder(
+        builder: (context) {
+          final authBloc = context.read<AuthBloc>();
+          final router = createRouter(authBloc);
+
+          return MaterialApp.router(
+            title: 'Flutter Demo',
+            theme: ThemeData(primarySwatch: Colors.indigo),
+            routerConfig: router,
+          );
+        },
       ),
     );
   }

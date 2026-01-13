@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_learn/features/bloc/auth.bloc.dart';
+import 'package:flutter_learn/features/bloc/auth.state.dart';
 import 'package:flutter_learn/features/auth/pages/login.dart';
-import 'package:flutter_learn/features/auth/widgets/AuthGuard.dart';
 import 'package:flutter_learn/features/cart/pages/cart_page.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
@@ -9,32 +14,69 @@ import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/features/products/viewmodels/home_page_vm.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/route_names.dart';
-import 'package:provider/provider.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 
-class AppRouter {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case RouteNames.home:
-        return MaterialPageRoute(
-          builder: (context) => WithAuthGuard(child: ChangeNotifierProvider(create: (context) => HomePageVm(), child: HomePage(productService: ProductService()))),
-        );
-      case RouteNames.login:
-        return MaterialPageRoute(builder: (context) => const LoginPage());
-      case RouteNames.productDetail:
-        final product = settings.arguments as ProductModel;
-        return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider(
-            create: (context) => ProductDetailVm(),
-            child: WithAuthGuard(child: ProductDetailPage(product: product)),
-          ),
-        );
-      case RouteNames.cart:
-        return MaterialPageRoute(builder: (context) => WithAuthGuard(child: const CartPage()));
-      default:
-        return MaterialPageRoute(
-          builder: (context) =>
-              const Scaffold(body: Center(child: Text('404'))),
-        );
-    }
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+
+class GoRouterRefreshStream extends ChangeNotifier {
+  late final StreamSubscription<dynamic> _sub;
+
+  GoRouterRefreshStream(Stream<dynamic> stream) {
+    _sub = stream.asBroadcastStream().listen((_) => notifyListeners());
   }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+}
+
+GoRouter createRouter(AuthBloc authBloc) {
+  return GoRouter(
+    navigatorKey: rootNavigatorKey,
+    initialLocation: RouteNames.home,
+
+    refreshListenable: GoRouterRefreshStream(authBloc.stream),
+
+    redirect: (context, state) {
+      final loggedIn = authBloc.state is Authenticated;
+      final isLoggingIn = state.matchedLocation == RouteNames.login;
+
+      if (!loggedIn && !isLoggingIn) return RouteNames.login;
+      if (loggedIn && isLoggingIn) return RouteNames.home;
+      return null;
+    },
+
+    routes: [
+      GoRoute(
+        path: RouteNames.home,
+        builder: (context, state) {
+          return ChangeNotifierProvider(
+            create: (_) => HomePageVm(),
+            child: HomePage(productService: ProductService()),
+          );
+        },
+      ),
+      GoRoute(
+        path: RouteNames.login,
+        builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: RouteNames.cart,
+        builder: (context, state) => const CartPage(),
+      ),
+      GoRoute(
+        path: RouteNames.productDetail, 
+        builder: (context, state) {
+          final product = state.extra as ProductModel;
+          return ChangeNotifierProvider(
+            create: (_) => ProductDetailVm(),
+            child: ProductDetailPage(product: product),
+          );
+        },
+      ),
+    ],
+  );
 }
