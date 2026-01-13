@@ -6,6 +6,7 @@ import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
 import 'package:flutter_learn/features/products/pages/product_detail_page.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
+import 'package:flutter_learn/features/products/viewmodels/home_page_vm.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class AppRouter {
     switch (settings.name) {
       case RouteNames.home:
         return MaterialPageRoute(
-          builder: (context) => WithAuthGuard(child: HomePage(productService: ProductService())),
+          builder: (context) => WithAuthGuard(child: ChangeNotifierProvider(create: (context) => HomePageVm(), child: HomePage(productService: ProductService()))),
         );
       case RouteNames.login:
         return MaterialPageRoute(builder: (context) => const LoginPage());
