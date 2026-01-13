@@ -5,7 +5,9 @@ import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
 import 'package:flutter_learn/features/products/pages/product_detail_page.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
+import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/route_names.dart';
+import 'package:provider/provider.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,10 +21,12 @@ class AppRouter {
       case RouteNames.productDetail:
         final product = settings.arguments as ProductModel;
         return MaterialPageRoute(
-          builder: (context) => ProductDetailPage(product: product),
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) => ProductDetailVm(),
+            child: ProductDetailPage(product: product),
+          ),
         );
       case RouteNames.cart:
-        // Import CartPage here to avoid circular dependency
         return MaterialPageRoute(builder: (context) => const CartPage());
       default:
         return MaterialPageRoute(

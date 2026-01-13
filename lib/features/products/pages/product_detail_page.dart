@@ -3,15 +3,15 @@ import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 
 import 'package:flutter_learn/features/products/models/product_model.dart';
+import 'package:flutter_learn/features/products/pages/widgets/quantity_selector.dart';
+import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class ProductDetailPage extends StatelessWidget {
   final ProductModel product;
 
-  const ProductDetailPage({
-    super.key,
-    required this.product,
-  });
+  const ProductDetailPage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class ProductDetailPage extends StatelessWidget {
                   _buildTitle(),
                   const SizedBox(height: 16),
                   _buildPrice(),
+                  QuantitySelector(),
                   const SizedBox(height: 24),
                   _buildDescription(),
                   const SizedBox(height: 24),
@@ -65,14 +66,10 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 
-
   Widget _buildTitle() {
     return Text(
       product.title,
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
+      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
     );
   }
 
@@ -93,19 +90,12 @@ class ProductDetailPage extends StatelessWidget {
       children: [
         const Text(
           'Description',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Text(
           product.description,
-          style: TextStyle(
-            fontSize: 16,
-            height: 1.6,
-            color: Colors.grey[700],
-          ),
+          style: TextStyle(fontSize: 16, height: 1.6, color: Colors.grey[700]),
         ),
       ],
     );
@@ -113,7 +103,8 @@ class ProductDetailPage extends StatelessWidget {
 
   Widget _buildAddToCartButton(BuildContext context) {
     final cartBloc = context.read<CartBloc>();
-    
+    final productVm = context.watch<ProductDetailVm>();
+
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
@@ -123,23 +114,14 @@ class ProductDetailPage extends StatelessWidget {
             SnackBar(
               content: Text('${product.title} added to cart'),
               backgroundColor: Colors.green,
-              action: SnackBarAction(
-                label: 'View Cart',
-                textColor: Colors.white,
-                onPressed: () {
-                  Navigator.of(context).pushNamed(RouteNames.cart);
-                },
-              ),
+              duration: Duration(seconds: 3),
             ),
           );
         },
         icon: const Icon(Icons.shopping_cart),
-        label: const Text(
-          'Add to Cart',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        label: Text(
+          'Add to Cart (${productVm.quantity})',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
