@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/bloc/auth.bloc.dart';
+import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
+import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
@@ -71,6 +74,13 @@ class _HomePageState extends State<HomePage>
                 },
               ),
             ],
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              context.read<CartBloc>().add(CartCleared());
+              context.read<AuthBloc>().add(LogoutEvent());
+            },
           ),
         ],
       ),
