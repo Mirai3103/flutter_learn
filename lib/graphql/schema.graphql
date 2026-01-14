@@ -1,0 +1,111 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+"""BigInt custom scalar"""
+scalar BigInt
+
+type Product {
+  id: ID!
+  title: String!
+  description: String
+  displayPrice: BigInt!
+  thumbnailUrl: String
+  isActive: Boolean!
+  createdAt: String!
+  updatedAt: String!
+  brandId: String!
+  categoryId: String!
+  isFeature: Boolean!
+  brand: Brand
+  category: Category
+  variants: [ProductVariant!]!
+  attributes: [Attribute!]!
+  images: [ProductImage!]!
+}
+
+type Brand {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Category {
+  id: ID!
+  name: String!
+  description: String
+  parentId: String
+  parent: Category
+}
+
+type ProductVariant {
+  id: ID!
+  productId: String!
+  sku: String!
+  variantName: String!
+  price: BigInt!
+  stockQuantity: Int!
+  isActive: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Attribute {
+  id: ID!
+  productId: String!
+  name: String!
+  value: String!
+}
+
+type ProductImage {
+  id: ID!
+  productId: String!
+  variantId: String
+  url: String!
+}
+
+type PaginationInfo {
+  page: Int!
+  limit: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type ProductListResponse {
+  items: [Product!]!
+  pagination: PaginationInfo!
+}
+
+enum SortOption {
+  newest
+  price_asc
+  price_desc
+  title_asc
+  title_desc
+}
+
+input ProductListInput {
+  page: Int
+  limit: Int
+  q: String
+  categoryIds: [String!]
+  brandIds: [String!]
+  minPrice: Float
+  maxPrice: Float
+  sort: SortOption
+  inStockOnly: Boolean
+  withInActive: Boolean
+  isFeatured: Boolean
+}
+
+type Query {
+  latestProducts(limit: Int): [Product!]!
+  listProducts(input: ProductListInput): ProductListResponse!
+  product(id: ID!, withInActive: Boolean): Product
+  relatedProducts(productId: ID!, limit: Int): [Product!]!
+  featuredProducts(limit: Int): [Product!]!
+  productsByBrand(brandId: ID!): [Product!]!
+  variant(variantId: ID!): ProductVariant
+  variantsByProduct(productId: ID!): [ProductVariant!]!
+}

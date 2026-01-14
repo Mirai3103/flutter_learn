@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
+import 'package:flutter_learn/features/products/repository/product_repository.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
 const int defaultSkip = 0;
 const int defaultTake = 8;
@@ -36,12 +37,12 @@ class LoadedHomeState extends HomeState {
 }
 
 class HomeCubit extends Cubit<HomeState> {
-  final ProductService productService;
-  HomeCubit(this.productService) : super(InitialHomeState());
+  final ProductRepository productRepository;
+  HomeCubit(this.productRepository) : super(InitialHomeState());
   Timer? _debounce;
   Future<void> initialize() async {
     emit(LoadingHomeState(state.products));
-    final products = await productService.getProducts(
+    final products = await productRepository.fetchProducts(
       take: defaultTake,
       skip: defaultSkip,
       q: state.search,
@@ -54,7 +55,7 @@ class HomeCubit extends Cubit<HomeState> {
     if (state is LoadedHomeState) {
       final currentState = state as LoadedHomeState;
       emit(LoadingHomeState(state.products));
-      final products = await productService.getProducts(
+      final products = await productRepository.fetchProducts(
         take: currentState.take,
         skip: currentState.skip + currentState.take,
         q: currentState.search,
@@ -72,7 +73,7 @@ class HomeCubit extends Cubit<HomeState> {
     } else {
       emit(LoadingHomeState(state.products));
 
-      final products = await productService.getProducts(
+      final products = await productRepository.fetchProducts(
         take: 8,
         skip: 0,
         q: state.search,
@@ -85,7 +86,7 @@ class HomeCubit extends Cubit<HomeState> {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 350), () async {
       emit(LoadingHomeState(state.products));
-      final products = await productService.getProducts(
+      final products = await productRepository.fetchProducts(
         take: 8,
         skip: 0,
         q: newSearch,
@@ -96,7 +97,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> refresh() async {
     emit(LoadingHomeState(state.products));
-    final products = await productService.getProducts(
+    final products = await productRepository.fetchProducts(
       take: state.take,
       skip: 0,
       q: state.search,

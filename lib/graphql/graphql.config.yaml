@@ -1,0 +1,9 @@
+schema: schema.graphql
+documents: '**/*.graphql'
+generates:
+  lib/graphql/generated/:
+    preset: client
+    plugins:
+      - dart
+    config:
+      client: graphql_flutter

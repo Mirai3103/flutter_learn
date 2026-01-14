@@ -1,0 +1,15 @@
+query ListProducts {
+  listProducts {
+    pagination {
+      limit,
+      page,
+      total
+      totalPages
+    }
+    items {
+      title
+      thumbnailUrl
+      displayPrice
+    }
+  }
+}
