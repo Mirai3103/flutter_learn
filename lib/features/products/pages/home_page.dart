@@ -13,8 +13,8 @@ import 'package:flutter_learn/routes/route_names.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, this.productService});
-  final ProductService? productService;
+  const HomePage({super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();

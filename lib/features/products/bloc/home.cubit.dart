@@ -5,7 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
-
+const int defaultSkip = 0;
+const int defaultTake = 8;
 class HomeState {
   final List<ProductModel> products;
   final bool hasMore;
@@ -16,8 +17,8 @@ class HomeState {
     required this.products,
     required this.hasMore,
     this.search = "",
-    this.skip = 0,
-    this.take = 8,
+    this.skip = defaultSkip ,
+    this.take = defaultTake,
   });
 }
 
@@ -41,11 +42,11 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> initialize() async {
     emit(LoadingHomeState(state.products));
     final products = await productService.getProducts(
-      take: 8,
-      skip: 0,
+      take: defaultTake,
+      skip: defaultSkip,
       q: state.search,
     );
-    emit(LoadedHomeState(products, products.length == 8, 0, 8));
+    emit(LoadedHomeState(products, products.length == defaultTake, defaultSkip, defaultTake));
   }
 
   Future<void> loadMore() async {
@@ -76,7 +77,7 @@ class HomeCubit extends Cubit<HomeState> {
         skip: 0,
         q: state.search,
       );
-      emit(LoadedHomeState(products, products.length == 8, 0, 8));
+      emit(LoadedHomeState(products, products.length == defaultTake, defaultSkip, defaultTake));
     }
   }
 
@@ -89,7 +90,7 @@ class HomeCubit extends Cubit<HomeState> {
         skip: 0,
         q: newSearch,
       );
-      emit(LoadedHomeState(products, products.length == 8, 0, 8));
+      emit(LoadedHomeState(products, products.length == defaultTake, defaultSkip, defaultTake));
     });
   }
 
@@ -101,7 +102,7 @@ class HomeCubit extends Cubit<HomeState> {
       q: state.search,
     );
     emit(
-      LoadedHomeState(products, products.length == state.take, 0, state.take),
+      LoadedHomeState(products, products.length == state.take, defaultSkip, state.take),
     );
   }
 }

@@ -12,7 +12,6 @@ import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
 import 'package:flutter_learn/features/products/pages/product_detail_page.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
-import 'package:flutter_learn/features/products/viewmodels/home_page_vm.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'dart:async';
@@ -60,10 +59,7 @@ GoRouter createRouter(AuthBloc authBloc) {
             create: (ctx) {
               return HomeCubit(productService)..initialize();
             },
-            child: ChangeNotifierProvider(
-              create: (_) => HomePageVm(),
-              child: HomePage(productService: productService),
-            ),
+            child:HomePage(),
           );
         },
       ),
