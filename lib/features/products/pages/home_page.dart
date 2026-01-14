@@ -5,6 +5,7 @@ import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
+import 'package:flutter_learn/features/products/bloc/home.cubit.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
@@ -19,18 +20,26 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   final _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent) {
+        print("Đã scroll tới cuối GridView");
+        context.read<HomeCubit>().loadMore();
+      }
+    });
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -85,32 +94,11 @@ class _HomePageState extends State<HomePage>
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: widget.productService?.getProducts(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          final products = snapshot.data ?? [];
-          if (products.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No products found',
-                    style: TextStyle(color: Colors.grey[600]),
-                  ),
-                ],
-              ),
-            );
-          }
-          return _buildProductGrid(products);
+      body: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          final product = state.products;
+          print("rendering HomePage with ${product.length} products");
+          return _buildProductGrid(product);
         },
       ),
     );
@@ -143,16 +131,31 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildProductGrid(List<ProductModel> products) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 0.7,
-      ),
-      itemCount: products.length,
-      itemBuilder: (context, index) => ProductCard(product: products[index]),
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            Expanded(child: GridView.builder(
+              padding: const EdgeInsets.all(16),
+              controller: _scrollController,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 0.7,
+              ),
+              itemCount: products.length,
+              itemBuilder: (context, index) =>
+                  ProductCard(product: products[index]),
+            )),
+            if (state is LoadingHomeState)
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: CircularProgressIndicator(),
+              ),
+          ],
+        );
+      },
     );
   }
 }

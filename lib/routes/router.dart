@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/products/bloc/home.cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -53,9 +54,16 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: RouteNames.home,
         builder: (context, state) {
-          return ChangeNotifierProvider(
-            create: (_) => HomePageVm(),
-            child: HomePage(productService: ProductService()),
+          final productService = ProductService();
+          return BlocProvider(
+            lazy: false,
+            create: (ctx) {
+              return HomeCubit(productService)..initialize();
+            },
+            child: ChangeNotifierProvider(
+              create: (_) => HomePageVm(),
+              child: HomePage(productService: productService),
+            ),
           );
         },
       ),
@@ -68,7 +76,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         builder: (context, state) => const CartPage(),
       ),
       GoRoute(
-        path: RouteNames.productDetail, 
+        path: RouteNames.productDetail,
         builder: (context, state) {
           final product = state.extra as ProductModel;
           return ChangeNotifierProvider(

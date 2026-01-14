@@ -5,13 +5,27 @@ import 'package:http/http.dart' as http;
 class ProductService {
   static const String baseUrl = 'https://fakestoreapi.com';
 
-  Future<List<ProductModel>> getProducts() async {
+  Future<List<ProductModel>> getProducts({
+    int take = 5,
+    int skip = 0,
+    String q = "",
+  }) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/products'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-        return data.map((json) => ProductModel.fromJson(json)).toList();
+        final parsed = data.map((json) => ProductModel.fromJson(json)).toList();
+        List<ProductModel> filtered = parsed
+            .where(
+              (product) =>
+                  product.title.toLowerCase().contains(q.toLowerCase()) ||
+                  product.description.toLowerCase().contains(q.toLowerCase()),
+            )
+            .skip(skip)
+            .take(take)
+            .toList();
+        return filtered;
       } else {
         throw Exception('Failed to load products');
       }
@@ -19,6 +33,7 @@ class ProductService {
       throw Exception('Error fetching products: $e');
     }
   }
+
   Future<ProductModel> getProductById(int id) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/products/$id'));
