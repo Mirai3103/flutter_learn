@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/auth/repository/auth_repository.dart';
 import 'package:flutter_learn/features/auth/services/auth.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.event.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_learn/features/products/repository/product_repository.da
 import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/router.dart';
+import 'package:flutter_learn/shareds/api_client/graphql.dart';
 import 'package:provider/provider.dart'; 
 
 class App extends StatelessWidget {
@@ -16,14 +18,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productService = ProductService();
+    final productService = ProductService(graphQLClient: client.value);
     final productRepository = ProductRepository(productService: productService);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => CartBloc()),
         BlocProvider(
           create: (_) {
-            final authBloc = AuthBloc(AuthService());
+            final authBloc = AuthBloc(AuthRepository(AuthService()));
             authBloc.add(RecoverSessionEvent());
             return authBloc;
           },

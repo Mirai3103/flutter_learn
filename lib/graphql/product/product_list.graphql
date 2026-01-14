@@ -7,9 +7,11 @@ query ListProducts {
       totalPages
     }
     items {
+      id
       title
       thumbnailUrl
       displayPrice
     }
   }
 }
+

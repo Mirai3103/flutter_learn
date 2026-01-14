@@ -12,13 +12,13 @@ class CartItemAdded extends CartEvent {
 }
 
 class CartItemRemoved extends CartEvent {
-  final int productId;
+  final String productId;
 
   const CartItemRemoved(this.productId);
 }
 
 class CartItemQuantityUpdated extends CartEvent {
-  final int productId;
+  final String productId;
   final int quantity;
 
   const CartItemQuantityUpdated({

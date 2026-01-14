@@ -6,19 +6,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/repository/product_repository.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
-const int defaultSkip = 0;
+const int defaultPage = 1;
 const int defaultTake = 8;
 class HomeState {
   final List<ProductModel> products;
   final bool hasMore;
   final String search;
-  final int skip;
+  final int page;
   final int take;
   const HomeState({
     required this.products,
     required this.hasMore,
     this.search = "",
-    this.skip = defaultSkip ,
+    this.page = defaultPage,
     this.take = defaultTake,
   });
 }
@@ -32,8 +32,8 @@ class LoadingHomeState extends HomeState {
 }
 
 class LoadedHomeState extends HomeState {
-  LoadedHomeState(List<ProductModel> products, bool hasMore, int skip, int take)
-    : super(products: products, hasMore: hasMore, skip: skip, take: take);
+  LoadedHomeState(List<ProductModel> products, bool hasMore, int page, int take)
+    : super(products: products, hasMore: hasMore, page: page, take: take);
 }
 
 class HomeCubit extends Cubit<HomeState> {
@@ -43,11 +43,11 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> initialize() async {
     emit(LoadingHomeState(state.products));
     final products = await productRepository.fetchProducts(
-      take: defaultTake,
-      skip: defaultSkip,
+      limit: defaultTake,
+      page: defaultPage,
       q: state.search,
     );
-    emit(LoadedHomeState(products, products.length == defaultTake, defaultSkip, defaultTake));
+    emit(LoadedHomeState(products, products.length == defaultTake, defaultPage, defaultTake));
   }
 
   Future<void> loadMore() async {
@@ -56,8 +56,8 @@ class HomeCubit extends Cubit<HomeState> {
       final currentState = state as LoadedHomeState;
       emit(LoadingHomeState(state.products));
       final products = await productRepository.fetchProducts(
-        take: currentState.take,
-        skip: currentState.skip + currentState.take,
+        limit: currentState.take,
+        page: currentState.page + 1,
         q: currentState.search,
       );
       final allProducts = List<ProductModel>.from(currentState.products)
@@ -66,7 +66,7 @@ class HomeCubit extends Cubit<HomeState> {
         LoadedHomeState(
           allProducts,
           products.length == currentState.take,
-          currentState.skip + currentState.take,
+          currentState.page + 1,
           currentState.take,
         ),
       );
@@ -74,11 +74,11 @@ class HomeCubit extends Cubit<HomeState> {
       emit(LoadingHomeState(state.products));
 
       final products = await productRepository.fetchProducts(
-        take: 8,
-        skip: 0,
+        limit: 8,
+        page: 1,
         q: state.search,
       );
-      emit(LoadedHomeState(products, products.length == defaultTake, defaultSkip, defaultTake));
+      emit(LoadedHomeState(products, products.length == defaultTake, defaultPage, defaultTake));
     }
   }
 
@@ -87,23 +87,23 @@ class HomeCubit extends Cubit<HomeState> {
     _debounce = Timer(const Duration(milliseconds: 350), () async {
       emit(LoadingHomeState(state.products));
       final products = await productRepository.fetchProducts(
-        take: 8,
-        skip: 0,
+        limit: 8,
+        page: 1,
         q: newSearch,
       );
-      emit(LoadedHomeState(products, products.length == defaultTake, defaultSkip, defaultTake));
+      emit(LoadedHomeState(products, products.length == defaultTake, defaultPage, defaultTake));
     });
   }
 
   Future<void> refresh() async {
     emit(LoadingHomeState(state.products));
     final products = await productRepository.fetchProducts(
-      take: state.take,
-      skip: 0,
+      limit: state.take,
+      page: 1,
       q: state.search,
     );
     emit(
-      LoadedHomeState(products, products.length == state.take, defaultSkip, state.take),
+      LoadedHomeState(products, products.length == state.take, defaultPage, state.take),
     );
   }
 }

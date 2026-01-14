@@ -18,3 +18,18 @@ class UserModel {
     return 'UserModel(id: $id, username: $username, email: $email)';
   }
 }
+
+class LoginResponseModel {
+  final String token;
+  final UserModel user;
+
+  LoginResponseModel({
+    required this.token,
+    required this.user,
+  });
+
+  @override
+  String toString() {
+    return 'LoginResponseModel(token: $token, user: $user)';
+  }
+}

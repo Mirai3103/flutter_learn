@@ -95,7 +95,7 @@ class ProductDetailPage extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          product.description,
+          product.description ?? "No description available.",
           style: TextStyle(fontSize: 16, height: 1.6, color: Colors.grey[700]),
         ),
       ],

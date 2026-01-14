@@ -1,11 +1,11 @@
 class ProductModel {
-  final int id;
+  final String id;
   final String title;
   final double price;
-  final String description;
-  final String category;
+  final String? description;
+  final String? category;
   final String image;
-  final Rating rating;
+  final Rating? rating;
 
   ProductModel({
     required this.id,
@@ -19,7 +19,7 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id'] as int,
+      id: json['id'],
       title: json['title'] as String,
       price: (json['price'] as num).toDouble(),
       description: json['description'] as String,

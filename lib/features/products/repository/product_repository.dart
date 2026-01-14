@@ -6,17 +6,39 @@ class ProductRepository {
   ProductRepository({required this.productService});
 
   Future<List<ProductModel>> fetchProducts({
-    int take = 5,
-    int skip = 0,
+    int page = 1,
+    int limit = 10,
     String q = "",
   }) async {
-    return await productService.getProducts(
-      take: take,
-      skip: skip,
+    final productsData = await productService.getProducts(
+      limit: limit,
+      page: page,
       q: q,
     );
+    return productsData.listProducts.items.map((e) => ProductModel(
+      id: e.id,
+      title: e.title,
+      price: double.parse(e.displayPrice),
+      image: e.thumbnailUrl!,
+      description: "",
+      category: "",
+      rating: Rating(rate: 4.4, count: 0),
+    )).toList();
   }
-  Future<ProductModel> fetchProductById(int id) async {
-    return await productService.getProductById(id);
+
+  Future<ProductModel> fetchProductById(String id) async {
+    final productData = await productService.getProductById(id);
+    if (productData == null) {
+      throw Exception("Product not found");
+    }
+    return ProductModel(
+      id: productData.id,
+      title: productData.title,
+      price: double.parse(productData.displayPrice),
+      description: productData.description,
+      image: productData.thumbnailUrl!,
+      category: id,
+      rating: Rating(rate: 4.4, count: 0),
+    );
   }
 }
