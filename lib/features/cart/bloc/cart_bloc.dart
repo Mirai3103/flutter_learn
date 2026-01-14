@@ -4,7 +4,6 @@ import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
 import 'package:flutter_learn/features/cart/models/cart_item_model.dart';
 
-
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(const CartInitial()) {
     on<CartItemAdded>(_onCartItemAdded);
@@ -13,10 +12,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartCleared>(_onCartCleared);
   }
 
-  void _onCartItemAdded(
-    CartItemAdded event,
-    Emitter<CartState> emit,
-  ) {
+  void _onCartItemAdded(CartItemAdded event, Emitter<CartState> emit) {
     final currentState = state;
     List<CartItemModel> items;
 
@@ -40,10 +36,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoaded(items));
   }
 
-  void _onCartItemRemoved(
-    CartItemRemoved event,
-    Emitter<CartState> emit,
-  ) {
+  void _onCartItemRemoved(CartItemRemoved event, Emitter<CartState> emit) {
     final currentState = state;
     if (currentState is CartLoaded) {
       final items = currentState.items
@@ -69,10 +62,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _onCartCleared(
-    CartCleared event,
-    Emitter<CartState> emit,
-  ) {
+  void _onCartCleared(CartCleared event, Emitter<CartState> emit) {
     emit(const CartLoaded([]));
   }
 }

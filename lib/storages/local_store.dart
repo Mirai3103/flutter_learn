@@ -1,5 +1,3 @@
-
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStore {
@@ -25,5 +23,4 @@ class LocalStore {
     final prefs = await instance;
     await prefs.remove(key);
   }
-  
 }

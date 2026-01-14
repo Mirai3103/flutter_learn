@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/repository/product_repository.dart';
-import 'package:flutter_learn/features/products/services/product_service.dart';
+
 const int defaultPage = 1;
 const int defaultTake = 8;
+
 class HomeState {
   final List<ProductModel> products;
   final bool hasMore;
@@ -28,7 +27,8 @@ class InitialHomeState extends HomeState {
 }
 
 class LoadingHomeState extends HomeState {
-  LoadingHomeState(List<ProductModel> products) : super(products: products, hasMore: true);
+  LoadingHomeState(List<ProductModel> products)
+    : super(products: products, hasMore: true);
 }
 
 class LoadedHomeState extends HomeState {
@@ -47,11 +47,18 @@ class HomeCubit extends Cubit<HomeState> {
       page: defaultPage,
       q: state.search,
     );
-    emit(LoadedHomeState(products, products.length == defaultTake, defaultPage, defaultTake));
+    emit(
+      LoadedHomeState(
+        products,
+        products.length == defaultTake,
+        defaultPage,
+        defaultTake,
+      ),
+    );
   }
 
   Future<void> loadMore() async {
-    if(state is LoadingHomeState) return;
+    if (state is LoadingHomeState) return;
     if (state is LoadedHomeState) {
       final currentState = state as LoadedHomeState;
       emit(LoadingHomeState(state.products));
@@ -78,7 +85,14 @@ class HomeCubit extends Cubit<HomeState> {
         page: 1,
         q: state.search,
       );
-      emit(LoadedHomeState(products, products.length == defaultTake, defaultPage, defaultTake));
+      emit(
+        LoadedHomeState(
+          products,
+          products.length == defaultTake,
+          defaultPage,
+          defaultTake,
+        ),
+      );
     }
   }
 
@@ -91,7 +105,14 @@ class HomeCubit extends Cubit<HomeState> {
         page: 1,
         q: newSearch,
       );
-      emit(LoadedHomeState(products, products.length == defaultTake, defaultPage, defaultTake));
+      emit(
+        LoadedHomeState(
+          products,
+          products.length == defaultTake,
+          defaultPage,
+          defaultTake,
+        ),
+      );
     });
   }
 
@@ -103,7 +124,12 @@ class HomeCubit extends Cubit<HomeState> {
       q: state.search,
     );
     emit(
-      LoadedHomeState(products, products.length == state.take, defaultPage, state.take),
+      LoadedHomeState(
+        products,
+        products.length == state.take,
+        defaultPage,
+        state.take,
+      ),
     );
   }
 }

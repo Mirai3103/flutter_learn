@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter_learn/features/auth/dto/login_response.dart';
-import 'package:flutter_learn/features/auth/models/user_model.dart';
 // http
 import 'package:http/http.dart' as http;
 

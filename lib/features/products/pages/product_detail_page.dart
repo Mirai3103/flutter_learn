@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
-
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/quantity_selector.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
-import 'package:flutter_learn/routes/route_names.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductDetailPage extends StatelessWidget {

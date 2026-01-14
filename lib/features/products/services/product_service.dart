@@ -22,7 +22,7 @@ class ProductService {
 
     final result = await graphQLClient.query(
       QueryOptions(
-        document: documentNodeQueryListProducts, 
+        document: documentNodeQueryListProducts,
         variables: input.toJson(),
         fetchPolicy: FetchPolicy.networkOnly,
       ),
@@ -36,11 +36,11 @@ class ProductService {
   }
 
   Future<Query$Product$product?> getProductById(String id) async {
-     final input = Variables$Query$Product(productId: id);
+    final input = Variables$Query$Product(productId: id);
 
-     final result = await graphQLClient.query(
+    final result = await graphQLClient.query(
       QueryOptions(
-        document: documentNodeQueryProduct, 
+        document: documentNodeQueryProduct,
         variables: input.toJson(),
         fetchPolicy: FetchPolicy.networkOnly,
       ),
@@ -52,4 +52,3 @@ class ProductService {
     return productData;
   }
 }
-

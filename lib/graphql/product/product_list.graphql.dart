@@ -19,12 +19,12 @@ class Query$ListProducts {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
+    final resultData = <String, dynamic>{};
     final l$listProducts = listProducts;
-    _resultData['listProducts'] = l$listProducts.toJson();
+    resultData['listProducts'] = l$listProducts.toJson();
     final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
+    resultData['__typename'] = l$$__typename;
+    return resultData;
   }
 
   @override
@@ -87,6 +87,7 @@ class _CopyWithImpl$Query$ListProducts<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? listProducts = _undefined,
     Object? $__typename = _undefined,
@@ -101,6 +102,7 @@ class _CopyWithImpl$Query$ListProducts<TRes>
     ),
   );
 
+  @override
   CopyWith$Query$ListProducts$listProducts<TRes> get listProducts {
     final local$listProducts = _instance.listProducts;
     return CopyWith$Query$ListProducts$listProducts(
@@ -114,11 +116,13 @@ class _CopyWithStubImpl$Query$ListProducts<TRes>
     implements CopyWith$Query$ListProducts<TRes> {
   _CopyWithStubImpl$Query$ListProducts(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({Query$ListProducts$listProducts? listProducts, String? $__typename}) =>
       _res;
 
+  @override
   CopyWith$Query$ListProducts$listProducts<TRes> get listProducts =>
       CopyWith$Query$ListProducts$listProducts.stub(_res);
 }
@@ -285,14 +289,14 @@ class Query$ListProducts$listProducts {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
+    final resultData = <String, dynamic>{};
     final l$pagination = pagination;
-    _resultData['pagination'] = l$pagination.toJson();
+    resultData['pagination'] = l$pagination.toJson();
     final l$items = items;
-    _resultData['items'] = l$items.map((e) => e.toJson()).toList();
+    resultData['items'] = l$items.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
+    resultData['__typename'] = l$$__typename;
+    return resultData;
   }
 
   @override
@@ -371,7 +375,7 @@ abstract class CopyWith$Query$ListProducts$listProducts<TRes> {
         >
       >,
     )
-    _fn,
+    fn,
   );
 }
 
@@ -385,6 +389,7 @@ class _CopyWithImpl$Query$ListProducts$listProducts<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? pagination = _undefined,
     Object? items = _undefined,
@@ -403,6 +408,7 @@ class _CopyWithImpl$Query$ListProducts$listProducts<TRes>
     ),
   );
 
+  @override
   CopyWith$Query$ListProducts$listProducts$pagination<TRes> get pagination {
     final local$pagination = _instance.pagination;
     return CopyWith$Query$ListProducts$listProducts$pagination(
@@ -411,6 +417,7 @@ class _CopyWithImpl$Query$ListProducts$listProducts<TRes>
     );
   }
 
+  @override
   TRes items(
     Iterable<Query$ListProducts$listProducts$items> Function(
       Iterable<
@@ -419,9 +426,9 @@ class _CopyWithImpl$Query$ListProducts$listProducts<TRes>
         >
       >,
     )
-    _fn,
+    fn,
   ) => call(
-    items: _fn(
+    items: fn(
       _instance.items.map(
         (e) => CopyWith$Query$ListProducts$listProducts$items(e, (i) => i),
       ),
@@ -433,18 +440,21 @@ class _CopyWithStubImpl$Query$ListProducts$listProducts<TRes>
     implements CopyWith$Query$ListProducts$listProducts<TRes> {
   _CopyWithStubImpl$Query$ListProducts$listProducts(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     Query$ListProducts$listProducts$pagination? pagination,
     List<Query$ListProducts$listProducts$items>? items,
     String? $__typename,
   }) => _res;
 
+  @override
   CopyWith$Query$ListProducts$listProducts$pagination<TRes> get pagination =>
       CopyWith$Query$ListProducts$listProducts$pagination.stub(_res);
 
-  items(_fn) => _res;
+  @override
+  items(fn) => _res;
 }
 
 class Query$ListProducts$listProducts$pagination {
@@ -484,18 +494,18 @@ class Query$ListProducts$listProducts$pagination {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
+    final resultData = <String, dynamic>{};
     final l$limit = limit;
-    _resultData['limit'] = l$limit;
+    resultData['limit'] = l$limit;
     final l$page = page;
-    _resultData['page'] = l$page;
+    resultData['page'] = l$page;
     final l$total = total;
-    _resultData['total'] = l$total;
+    resultData['total'] = l$total;
     final l$totalPages = totalPages;
-    _resultData['totalPages'] = l$totalPages;
+    resultData['totalPages'] = l$totalPages;
     final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
+    resultData['__typename'] = l$$__typename;
+    return resultData;
   }
 
   @override
@@ -592,6 +602,7 @@ class _CopyWithImpl$Query$ListProducts$listProducts$pagination<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? limit = _undefined,
     Object? page = _undefined,
@@ -621,8 +632,9 @@ class _CopyWithStubImpl$Query$ListProducts$listProducts$pagination<TRes>
     implements CopyWith$Query$ListProducts$listProducts$pagination<TRes> {
   _CopyWithStubImpl$Query$ListProducts$listProducts$pagination(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     int? limit,
     int? page,
@@ -669,18 +681,18 @@ class Query$ListProducts$listProducts$items {
   final String $__typename;
 
   Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
+    final resultData = <String, dynamic>{};
     final l$id = id;
-    _resultData['id'] = l$id;
+    resultData['id'] = l$id;
     final l$title = title;
-    _resultData['title'] = l$title;
+    resultData['title'] = l$title;
     final l$thumbnailUrl = thumbnailUrl;
-    _resultData['thumbnailUrl'] = l$thumbnailUrl;
+    resultData['thumbnailUrl'] = l$thumbnailUrl;
     final l$displayPrice = displayPrice;
-    _resultData['displayPrice'] = l$displayPrice;
+    resultData['displayPrice'] = l$displayPrice;
     final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
+    resultData['__typename'] = l$$__typename;
+    return resultData;
   }
 
   @override
@@ -777,6 +789,7 @@ class _CopyWithImpl$Query$ListProducts$listProducts$items<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? id = _undefined,
     Object? title = _undefined,
@@ -806,8 +819,9 @@ class _CopyWithStubImpl$Query$ListProducts$listProducts$items<TRes>
     implements CopyWith$Query$ListProducts$listProducts$items<TRes> {
   _CopyWithStubImpl$Query$ListProducts$listProducts$items(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     String? id,
     String? title,

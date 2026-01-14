@@ -15,15 +15,19 @@ class ProductRepository {
       page: page,
       q: q,
     );
-    return productsData.listProducts.items.map((e) => ProductModel(
-      id: e.id,
-      title: e.title,
-      price: double.parse(e.displayPrice),
-      image: e.thumbnailUrl!,
-      description: "",
-      category: "",
-      rating: Rating(rate: 4.4, count: 0),
-    )).toList();
+    return productsData.listProducts.items
+        .map(
+          (e) => ProductModel(
+            id: e.id,
+            title: e.title,
+            price: double.parse(e.displayPrice),
+            image: e.thumbnailUrl!,
+            description: "",
+            category: "",
+            rating: Rating(rate: 4.4, count: 0),
+          ),
+        )
+        .toList();
   }
 
   Future<ProductModel> fetchProductById(String id) async {

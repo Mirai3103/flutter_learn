@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-final HttpLink httpLink = HttpLink(
-  'http://10.0.2.2:3000/api/graphql',
-);
+final HttpLink httpLink = HttpLink('http://10.0.2.2:3000/api/graphql');
 
 ValueNotifier<GraphQLClient> client = ValueNotifier(
   GraphQLClient(

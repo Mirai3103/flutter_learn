@@ -359,6 +359,7 @@ class _CopyWithImpl$Input$ProductListInput<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
+  @override
   TRes call({
     Object? page = _undefined,
     Object? limit = _undefined,
@@ -394,8 +395,9 @@ class _CopyWithStubImpl$Input$ProductListInput<TRes>
     implements CopyWith$Input$ProductListInput<TRes> {
   _CopyWithStubImpl$Input$ProductListInput(this._res);
 
-  TRes _res;
+  final TRes _res;
 
+  @override
   call({
     int? page,
     int? limit,

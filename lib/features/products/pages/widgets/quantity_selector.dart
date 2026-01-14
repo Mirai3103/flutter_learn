@@ -3,6 +3,8 @@ import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dar
 import 'package:provider/provider.dart';
 
 class QuantitySelector extends StatelessWidget {
+  const QuantitySelector({super.key});
+
   @override
   Widget build(BuildContext context) {
     final productDetailVm = context.watch<ProductDetailVm>();

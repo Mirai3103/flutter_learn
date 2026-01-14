@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_learn/features/cart/models/cart_item_model.dart';
 
 abstract class CartState {

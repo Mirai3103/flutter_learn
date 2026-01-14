@@ -11,7 +11,6 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-  
         context.push(RouteNames.productDetail, extra: product);
       },
       borderRadius: BorderRadius.circular(12),
@@ -53,7 +52,7 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                
+
                   Text(
                     '\$${product.price.toStringAsFixed(2)}',
                     style: TextStyle(

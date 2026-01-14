@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 class WithAuthGuard extends StatelessWidget {
   final Widget child;
 
-  const WithAuthGuard({Key? key, required this.child}) : super(key: key);
+  const WithAuthGuard({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

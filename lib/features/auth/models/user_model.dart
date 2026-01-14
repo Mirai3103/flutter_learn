@@ -23,10 +23,7 @@ class LoginResponseModel {
   final String token;
   final UserModel user;
 
-  LoginResponseModel({
-    required this.token,
-    required this.user,
-  });
+  LoginResponseModel({required this.token, required this.user});
 
   @override
   String toString() {

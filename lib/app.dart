@@ -11,7 +11,7 @@ import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/router.dart';
 import 'package:flutter_learn/shareds/api_client/graphql.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

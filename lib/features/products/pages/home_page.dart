@@ -8,13 +8,11 @@ import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
 import 'package:flutter_learn/features/products/bloc/home.cubit.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
-import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -135,19 +133,21 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         return Column(
           children: [
-            Expanded(child: GridView.builder(
-              padding: const EdgeInsets.all(16),
-              controller: _scrollController,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 0.7,
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.all(16),
+                controller: _scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.7,
+                ),
+                itemCount: products.length,
+                itemBuilder: (context, index) =>
+                    ProductCard(product: products[index]),
               ),
-              itemCount: products.length,
-              itemBuilder: (context, index) =>
-                  ProductCard(product: products[index]),
-            )),
+            ),
             if (state is LoadingHomeState)
               const Padding(
                 padding: EdgeInsets.all(16.0),

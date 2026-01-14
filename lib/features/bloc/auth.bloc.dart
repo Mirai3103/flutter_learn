@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_learn/features/auth/repository/auth_repository.dart';
-import 'package:flutter_learn/features/auth/services/auth.dart';
 import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/bloc/auth.state.dart';
 import 'package:flutter_learn/storages/local_store.dart';

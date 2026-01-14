@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_event.dart';
 import 'package:flutter_learn/features/cart/bloc/cart_state.dart';
-import 'package:flutter_learn/features/cart/models/cart_item_model.dart';
 import 'package:flutter_learn/features/cart/pages/widgets/cart_item.dart';
 import 'package:go_router/go_router.dart';
-
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -34,7 +32,8 @@ class CartPage extends StatelessWidget {
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
-          if (state is CartInitial || (state is CartLoaded && state.items.isEmpty)) {
+          if (state is CartInitial ||
+              (state is CartLoaded && state.items.isEmpty)) {
             return _buildEmptyCart();
           }
 
@@ -66,7 +65,11 @@ class CartPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.shopping_cart_outlined, size: 100, color: Colors.grey[400]),
+          Icon(
+            Icons.shopping_cart_outlined,
+            size: 100,
+            color: Colors.grey[400],
+          ),
           const SizedBox(height: 24),
           Text(
             'Your cart is empty',
@@ -79,17 +82,12 @@ class CartPage extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Add some products to get started',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(fontSize: 16, color: Colors.grey[500]),
           ),
         ],
       ),
     );
   }
-
-  
 
   Widget _buildCheckoutSection(BuildContext context, CartLoaded state) {
     return Container(
@@ -111,10 +109,7 @@ class CartPage extends StatelessWidget {
             children: [
               const Text(
                 'Total:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Text(
                 '\$${state.totalPrice.toStringAsFixed(2)}',
@@ -146,10 +141,7 @@ class CartPage extends StatelessWidget {
               ),
               child: const Text(
                 'Checkout',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -163,10 +155,12 @@ class CartPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Clear Cart'),
-        content: const Text('Are you sure you want to remove all items from your cart?'),
+        content: const Text(
+          'Are you sure you want to remove all items from your cart?',
+        ),
         actions: [
           TextButton(
-            onPressed: () =>  context.pop(),
+            onPressed: () => context.pop(),
             child: const Text('Cancel'),
           ),
           FilledButton(

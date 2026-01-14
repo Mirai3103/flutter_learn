@@ -1,19 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-
-import 'package:go_router/go_router.dart';
-
-
+import 'package:flutter_learn/features/auth/pages/login.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.state.dart';
-import 'package:flutter_learn/features/auth/pages/login.dart';
 import 'package:flutter_learn/features/cart/pages/cart_page.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
 import 'package:flutter_learn/features/products/pages/product_detail_page.dart';
-
 import 'package:flutter_learn/routes/route_names.dart';
-import 'dart:async';
-import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 

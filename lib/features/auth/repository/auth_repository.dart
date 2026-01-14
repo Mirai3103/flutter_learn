@@ -1,4 +1,3 @@
-import 'package:flutter_learn/features/auth/dto/login_response.dart';
 import 'package:flutter_learn/features/auth/models/user_model.dart';
 import 'package:flutter_learn/features/auth/services/auth.dart';
 import 'package:flutter_learn/shareds/models/Result.dart';
@@ -11,25 +10,23 @@ class AuthRepository {
     String password,
   ) async {
     try {
-
-    final res = await authService.login(username, password);
-    if (res == null) {
-      return Result.fail("Login failed");
-    }
-    final loginResponseModel = LoginResponseModel(
-      token: res.token,
-      user: UserModel(
-        id: res.user.id,
-        username: res.user.name,
-        email: res.user.email,
-        password: "",
-        avatarUrl: res.user.image,
-      ),
-    );
-    return Result.ok(loginResponseModel);
-          
+      final res = await authService.login(username, password);
+      if (res == null) {
+        return Result.fail("Login failed");
+      }
+      final loginResponseModel = LoginResponseModel(
+        token: res.token,
+        user: UserModel(
+          id: res.user.id,
+          username: res.user.name,
+          email: res.user.email,
+          password: "",
+          avatarUrl: res.user.image,
+        ),
+      );
+      return Result.ok(loginResponseModel);
     } catch (e) {
-      return Result.fail("Login failed: ${e.toString()}"); 
+      return Result.fail("Login failed: ${e.toString()}");
     }
   }
 

@@ -1,4 +1,3 @@
-
 class UserResponse {
   final String name;
   final String email;
@@ -38,10 +37,7 @@ class LoginResponse {
   final String token;
   final UserResponse user;
 
-  LoginResponse({
-    required this.token,
-    required this.user,
-  });
+  LoginResponse({required this.token, required this.user});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
