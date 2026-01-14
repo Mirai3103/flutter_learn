@@ -6,8 +6,9 @@ abstract class CartEvent {
 
 class CartItemAdded extends CartEvent {
   final ProductModel product;
+  final int quantity;
 
-  const CartItemAdded(this.product);
+  const CartItemAdded(this.product, this.quantity );
 }
 
 class CartItemRemoved extends CartEvent {

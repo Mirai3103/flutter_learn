@@ -76,14 +76,11 @@ class _LoginPageState extends State<LoginPage> {
         print("Auth State Changed: $state");
         if (state is Authenticated) {
           final authState = state;
-
-          // Navigate to home page or show success message
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Welcome back! ${authState.user.username}')),
           );
           context.go(RouteNames.home);
         } else if (state is AuthError) {
-          // Show error message
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.message)));

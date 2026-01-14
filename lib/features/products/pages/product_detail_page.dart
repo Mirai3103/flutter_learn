@@ -103,14 +103,13 @@ class ProductDetailPage extends StatelessWidget {
   }
 
   Widget _buildAddToCartButton(BuildContext context) {
-    final cartBloc = context.read<CartBloc>();
-    final productVm = context.watch<ProductDetailVm>();
-
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: () {
-          cartBloc.add(CartItemAdded(product));
+          context.read<CartBloc>().add(
+            CartItemAdded(product, context.read<ProductDetailVm>().quantity),
+          );
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('${product.title} added to cart'),
@@ -121,7 +120,7 @@ class ProductDetailPage extends StatelessWidget {
         },
         icon: const Icon(Icons.shopping_cart),
         label: Text(
-          'Add to Cart (${productVm.quantity})',
+          'Add to Cart (${context.read<ProductDetailVm>().quantity})',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         style: FilledButton.styleFrom(
