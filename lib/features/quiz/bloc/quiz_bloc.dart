@@ -3,22 +3,25 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_learn/features/quiz/bloc/quiz_event.dart';
 import 'package:flutter_learn/features/quiz/bloc/quiz_state.dart';
+import 'package:flutter_learn/features/quiz/models/answer.dart';
 import 'package:flutter_learn/features/quiz/models/quiz.dart';
 import 'package:flutter_learn/features/quiz/repository/quiz_repository.dart';
 
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final QuizRepository _quizRepository;
+  final AnswerGrader _answerGrader = const AnswerGrader();
   static const int totalQuizTimeInSeconds = 600;
   Timer? _timer;
   QuizSession? lastSession;
 
   QuizBloc(this._quizRepository) : super(QuizInitial()) {
     on<SessionStarted>(_onSessionStarted);
-    on<AnswerSubmitted>(_onAnswerSubmitted);
+    on<AnswerSheetUpdated>(_onAnswerSheetUpdated);
     on<QuizSessionTimeUpdated>(_onTimeUpdated);
     on<QuizSessionSubmitted>(_onSessionSubmitted);
     on<QuizSessionTimeoutEvent>(_onSessionTimeout);
     on<NextQuestionRequested>(_onNextQuestionRequested);
+    on<QuizRestarted>(_onQuizRestarted);
   }
 
   Future<void> _onSessionStarted(
@@ -34,13 +37,30 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final quizzes = await _quizRepository.getRandomQuizzes(
         event.numberOfQuestions,
       );
-
+      final answerSheets = quizzes.map(
+        (quiz) => (quiz.map(
+          multipleChoiceMultipleAnswers: (q) =>
+              AnswerSheet.multipleChoiceMultipleAnswers(
+                quizId: q.id,
+                selectedAnswers: null,
+              ),
+          multipleChoiceSingleAnswer: (q) =>
+              AnswerSheet.multipleChoiceSingleAnswer(
+                quizId: q.id,
+                selectedAnswer: null,
+              ),
+          fillInTheBlank: (q) =>
+              AnswerSheet.fillInTheBlank(quizId: q.id, answer: null),
+          trueOrFalse: (q) =>
+              AnswerSheet.trueOrFalse(quizId: q.id, answer: null),
+        )),
+      );
       emit(
         QuizSession(
           quizzes: quizzes,
           currentIndex: 0,
           remainingSeconds: totalQuizTimeInSeconds,
-          answerSheets: [],
+          answerSheets: answerSheets.toList(),
         ),
       );
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -76,13 +96,20 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
   }
 
-  void _onAnswerSubmitted(AnswerSubmitted event, Emitter<QuizState> emit) {
+  void _onAnswerSheetUpdated(
+    AnswerSheetUpdated event,
+    Emitter<QuizState> emit,
+  ) {
     if (state is QuizSession) {
       final currentState = state as QuizSession;
-      final updatedAnswerSheets = List<AnswerSheet>.from(
-        currentState.answerSheets,
-      )..add(event.answerSheet);
-       emit(currentState.copyWith(answerSheets: updatedAnswerSheets));
+      // cập nhật đúng vị trí của answerSheet trong answerSheets
+      final updatedAnswerSheets = currentState.answerSheets.map((answerSheet) {
+        if (answerSheet.quizId == event.answerSheet.quizId) {
+          return event.answerSheet;
+        }
+        return answerSheet;
+      }).toList();
+      emit(currentState.copyWith(answerSheets: updatedAnswerSheets));
     }
   }
 
@@ -92,7 +119,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       emit(currentState.copyWith(remainingSeconds: event.remainingSeconds));
     }
   }
-  void _onNextQuestionRequested(NextQuestionRequested event, Emitter<QuizState> emit) {
+
+  void _onNextQuestionRequested(
+    NextQuestionRequested event,
+    Emitter<QuizState> emit,
+  ) {
     if (state is QuizSession) {
       final currentState = state as QuizSession;
       final nextIndex = currentState.currentIndex + 1;
@@ -112,7 +143,15 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final currentState = state as QuizSession;
       lastSession = currentState;
       final correctAnswers = currentState.answerSheets
-          .where((answerSheet) => answerSheet.isCorrect)
+          .asMap()
+          .entries
+          .map(
+            (entry) => _answerGrader.isCorrect(
+              quiz: currentState.quizzes[entry.key],
+              sheet: entry.value,
+            ),
+          )
+          .where((isCorrect) => isCorrect)
           .length;
       emit(
         QuizCompleted(
@@ -125,7 +164,15 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
     if (state is QuizSessionTimeout && lastSession != null) {
       final correctAnswers = lastSession!.answerSheets
-          .where((answerSheet) => answerSheet.isCorrect)
+          .asMap()
+          .entries
+          .map(
+            (entry) => _answerGrader.isCorrect(
+              quiz: lastSession!.quizzes[entry.key],
+              sheet: entry.value,
+            ),
+          )
+          .where((isCorrect) => isCorrect)
           .length;
       emit(
         QuizCompleted(
@@ -136,6 +183,14 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         ),
       );
     }
+    if (_timer != null) {
+      _timer!.cancel();
+      _timer = null;
+    }
+  }
+
+  void _onQuizRestarted(QuizRestarted event, Emitter<QuizState> emit) {
+    emit(QuizInitial());
     if (_timer != null) {
       _timer!.cancel();
       _timer = null;

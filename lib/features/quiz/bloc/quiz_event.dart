@@ -10,9 +10,9 @@ class SessionStarted extends QuizEvent {
   SessionStarted({required this.numberOfQuestions});
 }
 
-class AnswerSubmitted extends QuizEvent {
+class AnswerSheetUpdated extends QuizEvent {
   final AnswerSheet answerSheet;
-  AnswerSubmitted({required this.answerSheet});
+  AnswerSheetUpdated({required this.answerSheet});
 }
 
 class NextQuestionRequested extends QuizEvent {
@@ -26,3 +26,5 @@ class QuizSessionTimeUpdated extends QuizEvent {
 class QuizSessionTimeoutEvent extends QuizEvent {}
 
 class QuizSessionSubmitted extends QuizEvent {}
+
+class QuizRestarted extends QuizEvent {}

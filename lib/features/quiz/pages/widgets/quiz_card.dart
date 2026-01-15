@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/quiz/bloc/quiz_bloc.dart';
 import 'package:flutter_learn/features/quiz/bloc/quiz_event.dart';
+import 'package:flutter_learn/features/quiz/bloc/quiz_state.dart';
 import 'package:flutter_learn/features/quiz/models/quiz.dart';
 
 class QuizCard extends StatefulWidget {
@@ -77,9 +78,20 @@ class _QuizCardState extends State<QuizCard> {
 
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _handleSubmit,
-                child: const Text('Submit Answer'),
+              child: BlocBuilder<QuizBloc, QuizState>(
+                builder: (context, state) {
+                  if (state is QuizSession &&
+                      state.currentIndex < state.quizzes.length - 1) {
+                    return FilledButton(
+                      onPressed: _handleNextQuestion,
+                      child: const Text('Next Question'),
+                    );
+                  }
+                  return FilledButton(
+                    onPressed: _handleSubmitQuiz,
+                    child: const Text('Submit Quiz'),
+                  );
+                },
               ),
             ),
           ],
@@ -110,6 +122,10 @@ class _QuizCardState extends State<QuizCard> {
         );
       }).toList(),
     );
+  }
+
+  void _handleSubmitQuiz() {
+    context.read<QuizBloc>().add(QuizSessionSubmitted());
   }
 
   Widget _buildMultipleChoiceSingleAnswer(MultipleChoiceWithSingleAnswer quiz) {
@@ -168,7 +184,7 @@ class _QuizCardState extends State<QuizCard> {
     );
   }
 
-  void _handleSubmit() {
+  void _handleNextQuestion() {
     widget.quiz.map(
       multipleChoiceMultipleAnswers: (q) {
         print('Quiz ID: ${q.id}');
@@ -177,11 +193,10 @@ class _QuizCardState extends State<QuizCard> {
         final answerSheet = AnswerSheet.multipleChoiceMultipleAnswers(
           quizId: q.id,
           selectedAnswers: selectedMultipleAnswers.toList(),
-          correctAnswers: q.correctAnswers,
         );
-        final isCorrect = answerSheet.isCorrect;
-        context.read<QuizBloc>().add(AnswerSubmitted(answerSheet: answerSheet));
-        _showResult(isCorrect);
+        context.read<QuizBloc>().add(
+          AnswerSheetUpdated(answerSheet: answerSheet),
+        );
       },
       multipleChoiceSingleAnswer: (q) {
         print('Quiz ID: ${q.id}');
@@ -190,11 +205,10 @@ class _QuizCardState extends State<QuizCard> {
         final answerSheet = AnswerSheet.multipleChoiceSingleAnswer(
           quizId: q.id,
           selectedAnswer: selectedSingleAnswer!,
-          correctAnswer: q.correctAnswer,
         );
-        final isCorrect = answerSheet.isCorrect;
-        context.read<QuizBloc>().add(AnswerSubmitted(answerSheet: answerSheet));
-        _showResult(isCorrect);
+        context.read<QuizBloc>().add(
+          AnswerSheetUpdated(answerSheet: answerSheet),
+        );
       },
       fillInTheBlank: (q) {
         print('Quiz ID: ${q.id}');
@@ -203,11 +217,10 @@ class _QuizCardState extends State<QuizCard> {
         final answerSheet = AnswerSheet.fillInTheBlank(
           quizId: q.id,
           answer: fillInController.text.trim(),
-          correctAnswer: q.correctAnswer,
         );
-        context.read<QuizBloc>().add(AnswerSubmitted(answerSheet: answerSheet));
-        final isCorrect = answerSheet.isCorrect;
-        _showResult(isCorrect);
+        context.read<QuizBloc>().add(
+          AnswerSheetUpdated(answerSheet: answerSheet),
+        );
       },
       trueOrFalse: (q) {
         print('Quiz ID: ${q.id}');
@@ -216,42 +229,18 @@ class _QuizCardState extends State<QuizCard> {
         final answerSheet = AnswerSheet.trueOrFalse(
           quizId: q.id,
           answer: selectedTrueOrFalse!,
-          correctAnswer: q.correctAnswer,
         );
-        context.read<QuizBloc>().add(AnswerSubmitted(answerSheet: answerSheet));
-        final isCorrect = answerSheet.isCorrect;
-        
-        _showResult(isCorrect);
+        context.read<QuizBloc>().add(
+          AnswerSheetUpdated(answerSheet: answerSheet),
+        );
       },
     );
-  }
-
-  void _showResult(bool isCorrect) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(isCorrect ? 'Correct! ✓' : 'Incorrect ✗'),
-        content: Text(
-          isCorrect
-              ? 'Great job! Your answer is correct.'
-              : 'Sorry, that\'s not the right answer.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => {
-              setState(() {
-                selectedMultipleAnswers.clear();
-                selectedSingleAnswer = null;
-                fillInController.clear();
-                selectedTrueOrFalse = null;
-              }),
-              Navigator.pop(context),
-              context.read<QuizBloc>().add(NextQuestionRequested()),
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
+    context.read<QuizBloc>().add(NextQuestionRequested());
+    setState(() {
+      selectedMultipleAnswers.clear();
+      selectedSingleAnswer = null;
+      fillInController.clear();
+      selectedTrueOrFalse = null;
+    });
   }
 }

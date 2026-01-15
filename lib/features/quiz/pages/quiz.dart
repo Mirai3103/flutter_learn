@@ -35,22 +35,7 @@ class QuizPage extends StatelessWidget {
       body: BlocConsumer<QuizBloc, QuizState>(
         builder: (context, state) {
           if (state is QuizSession) {
-            if (state.answerSheets.length == state.quizzes.length) {
-              return Column(
-                children: [
-                  TextButton(
-                    onPressed: () =>
-                        context.read<QuizBloc>().add(QuizSessionSubmitted()),
-                    child: Text('Submit Quiz'),
-                  ),
-                  TextButton(
-                    onPressed: () =>
-                        context.read<QuizBloc>().add(NextQuestionRequested()),
-                    child: Text('Next Question'),
-                  ),
-                ],
-              );
-            }
+           
             return Column(
               children: [QuizCard(quiz: state.quizzes[state.currentIndex])],
             );
@@ -69,7 +54,7 @@ class QuizPage extends StatelessWidget {
               children: [
                 Text('Quiz Completed'),
                 Text('Score: ${state.correctAnswers} / ${state.totalAnswers}'),
-                FilledButton(onPressed: () => context.read<QuizBloc>().add(QuizSessionSubmitted()), child: Text('Restart'))
+                FilledButton(onPressed: () => context.read<QuizBloc>().add(QuizRestarted()), child: Text('Restart'))
               ],
             );
           }
