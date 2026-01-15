@@ -83,7 +83,11 @@ class _QuizCardState extends State<QuizCard> {
                   if (state is QuizSession &&
                       state.currentIndex < state.quizzes.length - 1) {
                     return FilledButton(
-                      onPressed: _handleNextQuestion,
+                      onPressed: _isAnswered ? _handleNextQuestion : null,
+                      style: FilledButton.styleFrom(
+                        backgroundColor: _isAnswered ? Theme.of(context).colorScheme.primary : Colors.grey[300],
+                      ),
+                      
                       child: const Text('Next Question'),
                     );
                   }
@@ -243,4 +247,13 @@ class _QuizCardState extends State<QuizCard> {
       selectedTrueOrFalse = null;
     });
   }
+  bool get _isAnswered {
+  return widget.quiz.map(
+    multipleChoiceMultipleAnswers: (_) => selectedMultipleAnswers.isNotEmpty,
+    multipleChoiceSingleAnswer: (_) => selectedSingleAnswer != null,
+    fillInTheBlank: (_) => fillInController.text.trim().isNotEmpty,
+    trueOrFalse: (_) => selectedTrueOrFalse != null,
+  );
+}
+
 }

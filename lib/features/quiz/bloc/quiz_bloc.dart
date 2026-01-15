@@ -10,7 +10,7 @@ import 'package:flutter_learn/features/quiz/repository/quiz_repository.dart';
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final QuizRepository _quizRepository;
   final AnswerGrader _answerGrader = const AnswerGrader();
-  static const int totalQuizTimeInSeconds = 600;
+  static const int totalQuizTimeInSeconds = 180;
   Timer? _timer;
   QuizSession? lastSession;
 
