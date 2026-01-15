@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_learn/features/auth/pages/widgets/login_form.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.event.dart';
 import 'package:flutter_learn/features/bloc/auth.state.dart';
@@ -14,54 +15,35 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildBlocListener(),
-                BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, state) {
-                    if (state is AuthLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return Column(
-                      children: [
-                        const SizedBox(height: 60),
-                        _buildHeader(),
-                        const SizedBox(height: 48),
-                        _buildUsernameField(),
-                        const SizedBox(height: 20),
-                        _buildPasswordField(),
-                        const SizedBox(height: 32),
-                        _buildLoginButton(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildBlocListener(),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return Column(
+                    children: [
+                      const SizedBox(height: 60),
+                      _buildHeader(),
+                      const SizedBox(height: 48),
+                      LoginForm(onLogin: _handleLogin),
 
-                        const SizedBox(height: 24),
-                        _buildGoogleLoginButton(),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
+                      const SizedBox(height: 24),
+                      _buildGoogleLoginButton(),
+                    ],
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -101,85 +83,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildUsernameField() {
-    return TextFormField(
-      controller: _usernameController,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        labelText: 'Username',
-        hintText: 'Enter your username',
-        prefixIcon: const Icon(Icons.person_outline),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        filled: true,
-        fillColor: Colors.grey[50],
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your username';
-        }
-        return null;
-      },
+  void _handleLogin(String username, String password) {
+    context.read<AuthBloc>().add(
+      LoginEvent(username: username, password: password),
     );
-  }
-
-  Widget _buildPasswordField() {
-    return TextFormField(
-      controller: _passwordController,
-      obscureText: _obscurePassword,
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        hintText: 'Enter your password',
-        prefixIcon: const Icon(Icons.lock_outlined),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscurePassword
-                ? Icons.visibility_outlined
-                : Icons.visibility_off_outlined,
-          ),
-          onPressed: () {
-            setState(() {
-              _obscurePassword = !_obscurePassword;
-            });
-          },
-        ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        filled: true,
-        fillColor: Colors.grey[50],
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your password';
-        }
-        return null;
-      },
-      onFieldSubmitted: (_) => _handleLogin(),
-    );
-  }
-
-  Widget _buildLoginButton() {
-    return FilledButton(
-      onPressed: _handleLogin,
-      style: FilledButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      child: const Text(
-        'Sign In',
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
-  void _handleLogin() {
-    if (_formKey.currentState!.validate()) {
-      final username = _usernameController.text.trim();
-      final password = _passwordController.text.trim();
-      context.read<AuthBloc>().add(
-        LoginEvent(username: username, password: password),
-      );
-    }
   }
 
   Widget _buildGoogleLoginButton() {
