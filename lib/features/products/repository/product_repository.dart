@@ -1,3 +1,4 @@
+import 'package:flutter_learn/features/products/mappers/product_maper.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
 
@@ -15,19 +16,7 @@ class ProductRepository {
       page: page,
       q: q,
     );
-    return productsData.listProducts.items
-        .map(
-          (e) => ProductModel(
-            id: e.id,
-            title: e.title,
-            price: double.parse(e.displayPrice),
-            image: e.thumbnailUrl!,
-            description: "",
-            category: "",
-            rating: Rating(rate: 4.4, count: 0),
-          ),
-        )
-        .toList();
+    return productsData.listProducts.items.map((e) => e.toDomain()).toList();
   }
 
   Future<ProductModel> fetchProductById(String id) async {
@@ -35,14 +24,6 @@ class ProductRepository {
     if (productData == null) {
       throw Exception("Product not found");
     }
-    return ProductModel(
-      id: productData.id,
-      title: productData.title,
-      price: double.parse(productData.displayPrice),
-      description: productData.description,
-      image: productData.thumbnailUrl!,
-      category: id,
-      rating: Rating(rate: 4.4, count: 0),
-    );
+    return productData.toDomain();
   }
 }
