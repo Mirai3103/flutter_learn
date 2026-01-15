@@ -44,6 +44,7 @@ dependencies:
   graphql_codegen: ^3.0.0
   build_runner: ^2.10.5
   google_fonts: ^7.0.2
+  equatable: ^2.0.8
 
 dev_dependencies:
   flutter_test:

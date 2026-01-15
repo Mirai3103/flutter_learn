@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/repository/product_repository.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_learn/features/products/repository/product_repository.da
 const int defaultPage = 1;
 const int defaultTake = 8;
 
-class HomeState {
+abstract class HomeState extends Equatable {
   final List<ProductModel> products;
   final bool hasMore;
   final String search;
@@ -24,16 +25,29 @@ class HomeState {
 
 class InitialHomeState extends HomeState {
   InitialHomeState() : super(products: [], hasMore: true);
+
+  @override
+  List<Object?> get props => [products, hasMore, search, page, take];
 }
 
 class LoadingHomeState extends HomeState {
-  LoadingHomeState(List<ProductModel> products)
+  const LoadingHomeState(List<ProductModel> products)
     : super(products: products, hasMore: true);
+
+  @override
+  List<Object?> get props => [products, hasMore, search, page, take];
 }
 
 class LoadedHomeState extends HomeState {
-  LoadedHomeState(List<ProductModel> products, bool hasMore, int page, int take)
-    : super(products: products, hasMore: hasMore, page: page, take: take);
+  const LoadedHomeState(
+    List<ProductModel> products,
+    bool hasMore,
+    int page,
+    int take,
+  ) : super(products: products, hasMore: hasMore, page: page, take: take);
+
+  @override
+  List<Object?> get props => [products, hasMore, search, page, take];
 }
 
 class HomeCubit extends Cubit<HomeState> {

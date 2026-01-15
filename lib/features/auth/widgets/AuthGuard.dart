@@ -15,7 +15,7 @@ class WithAuthGuard extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         switch (state) {
-          case Unauthenticated():
+          case AuthUnauthenticated():
             context.go(RouteNames.login);
           case AuthError():
             context.go(RouteNames.login);

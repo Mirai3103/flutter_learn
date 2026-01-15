@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogout(LogoutEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     await LocalStore.remove('token');
-    emit(Unauthenticated());
+    emit(AuthUnauthenticated());
   }
 
   Future<void> _onRecoverSession(
@@ -45,6 +45,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         return;
       }
     }
-    emit(Unauthenticated());
+    emit(AuthUnauthenticated());
   }
 }
