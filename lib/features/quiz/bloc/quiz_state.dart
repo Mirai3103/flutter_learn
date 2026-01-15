@@ -66,8 +66,11 @@ class QuizSessionTimeout extends QuizState {
 
 class QuizCompleted extends QuizState {
   final List<AnswerSheet> answerSheets;
-  const QuizCompleted(this.answerSheets);
+  const QuizCompleted(this.answerSheets, this.correctAnswers, this.incorrectAnswers, this.totalAnswers);
+  final int correctAnswers;
+  final int incorrectAnswers;
+  final int totalAnswers;
 
   @override
-  List<Object?> get props => [answerSheets];
+  List<Object?> get props => [answerSheets, correctAnswers, incorrectAnswers, totalAnswers];
 }

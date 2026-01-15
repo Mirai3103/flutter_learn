@@ -14,12 +14,12 @@ class QuizService {
       id: '2',
       question: 'Which language is primarily used to develop Flutter apps?',
       options: [
-        QuizOption(id: 1, option: 'Java'),
-        QuizOption(id: 2, option: 'Kotlin'),
-        QuizOption(id: 3, option: 'Dart'),
-        QuizOption(id: 4, option: 'Swift'),
+        QuizOption(id: '1', option: 'Java'),
+        QuizOption(id: '2', option: 'Kotlin'),
+        QuizOption(id: '3', option: 'Dart'),
+        QuizOption(id: '4', option: 'Swift'),
       ],
-      correctAnswer: 'Dart',
+      correctAnswer: '3',
     ),
 
     // 3
@@ -41,13 +41,13 @@ class QuizService {
       id: '5',
       question: 'Which platforms are supported by Flutter?',
       options: [
-        QuizOption(id: 1, option: 'Android'),
-        QuizOption(id: 2, option: 'iOS'),
-        QuizOption(id: 3, option: 'Web'),
-        QuizOption(id: 4, option: 'Windows'),
-        QuizOption(id: 5, option: 'Linux'),
+        QuizOption(id: '1', option: 'Android'),
+        QuizOption(id: '2', option: 'iOS'),
+        QuizOption(id: '3', option: 'Web'),
+        QuizOption(id: '4', option: 'Windows'),
+        QuizOption(id: '5', option: 'Linux'),
       ],
-      correctAnswers: ['Android', 'iOS', 'Web', 'Windows', 'Linux'],
+      correctAnswers: ['1', '2', '3', '4', '5'],
     ),
 
     // 6
@@ -55,12 +55,12 @@ class QuizService {
       id: '6',
       question: 'Which widget is used for immutable UI in Flutter?',
       options: [
-        QuizOption(id: 1, option: 'StatefulWidget'),
-        QuizOption(id: 2, option: 'InheritedWidget'),
-        QuizOption(id: 3, option: 'StatelessWidget'),
-        QuizOption(id: 4, option: 'Container'),
+        QuizOption(id: '1', option: 'StatefulWidget'),
+        QuizOption(id: '2', option: 'InheritedWidget'),
+        QuizOption(id: '3'  , option: 'StatelessWidget'),
+        QuizOption(id: '4', option: 'Container'),
       ],
-      correctAnswer: 'StatelessWidget',
+      correctAnswer: '3',
     ),
 
     // 7
@@ -82,12 +82,12 @@ class QuizService {
       id: '9',
       question: 'Which are Flutter layout widgets?',
       options: [
-        QuizOption(id: 1, option: 'Row'),
-        QuizOption(id: 2, option: 'Column'),
-        QuizOption(id: 3, option: 'Stack'),
-        QuizOption(id: 4, option: 'Text'),
+        QuizOption(id: '1', option: 'Row'),
+        QuizOption(id: '2', option: 'Column'),
+        QuizOption(id: '3', option: 'Stack'),
+        QuizOption(id: '4', option: 'Text'),
       ],
-      correctAnswers: ['Row', 'Column', 'Stack'],
+      correctAnswers: ['1', '2', '3', '4'],
     ),
 
     // 10
@@ -102,12 +102,12 @@ class QuizService {
       id: '11',
       question: 'Which command creates a new Flutter project?',
       options: [
-        QuizOption(id: 1, option: 'flutter new'),
-        QuizOption(id: 2, option: 'flutter init'),
-        QuizOption(id: 3, option: 'flutter create'),
-        QuizOption(id: 4, option: 'flutter start'),
+        QuizOption(id: '1', option: 'flutter new'),
+        QuizOption(id: '2', option: 'flutter init'),
+        QuizOption(id: '3', option: 'flutter create'),
+        QuizOption(id: '4', option: 'flutter start'),
       ],
-      correctAnswer: 'flutter create',
+      correctAnswer: '3',
     ),
 
     // 12
@@ -130,13 +130,13 @@ class QuizService {
       id: '14',
       question: 'Which are valid Flutter state management solutions?',
       options: [
-        QuizOption(id: 1, option: 'Provider'),
-        QuizOption(id: 2, option: 'Bloc'),
-        QuizOption(id: 3, option: 'Riverpod'),
-        QuizOption(id: 4, option: 'Redux'),
-        QuizOption(id: 5, option: 'JQuery'),
+        QuizOption(id: '1', option: 'Provider'),
+        QuizOption(id: '2', option: 'Bloc'),
+        QuizOption(id: '3', option: 'Riverpod'),
+        QuizOption(id: '4', option: 'Redux'),
+        QuizOption(id: '5', option: 'JQuery'),
       ],
-      correctAnswers: ['Provider', 'Bloc', 'Riverpod', 'Redux'],
+      correctAnswers: ['1', '2', '3', '4', '5'],
     ),
 
     // 15
@@ -144,12 +144,12 @@ class QuizService {
       id: '15',
       question: 'Which widget is commonly used for scrolling?',
       options: [
-        QuizOption(id: 1, option: 'Column'),
-        QuizOption(id: 2, option: 'ListView'),
-        QuizOption(id: 3, option: 'Stack'),
-        QuizOption(id: 4, option: 'Expanded'),
+        QuizOption(id: '1', option: 'Column'),
+        QuizOption(id: '2', option: 'ListView'),
+        QuizOption(id: '3', option: 'Stack'),
+        QuizOption(id: '4', option: 'Expanded'),
       ],
-      correctAnswer: 'ListView',
+      correctAnswer: '2',
     ),
 
     // 16
@@ -171,12 +171,12 @@ class QuizService {
       id: '18',
       question: 'Which file contains Flutter app dependencies?',
       options: [
-        QuizOption(id: 1, option: 'main.dart'),
-        QuizOption(id: 2, option: 'pubspec.yaml'),
-        QuizOption(id: 3, option: 'android.gradle'),
-        QuizOption(id: 4, option: 'build.yaml'),
+        QuizOption(id: '1', option: 'main.dart'),
+        QuizOption(id: '2', option: 'pubspec.yaml'),
+        QuizOption(id: '3', option: 'android.gradle'),
+        QuizOption(id: '4', option: 'build.yaml'),
       ],
-      correctAnswer: 'pubspec.yaml',
+      correctAnswer: '2',
     ),
 
     // 19
@@ -191,12 +191,12 @@ class QuizService {
       id: '20',
       question: 'Which widgets can handle user input?',
       options: [
-        QuizOption(id: 1, option: 'TextField'),
-        QuizOption(id: 2, option: 'GestureDetector'),
-        QuizOption(id: 3, option: 'ElevatedButton'),
-        QuizOption(id: 4, option: 'Container'),
+        QuizOption(id: '1', option: 'TextField'),
+        QuizOption(id: '2', option: 'GestureDetector'),
+        QuizOption(id: '3', option: 'ElevatedButton'),
+        QuizOption(id: '4', option: 'Container'),
       ],
-      correctAnswers: ['TextField', 'GestureDetector', 'ElevatedButton'],
+      correctAnswers: ['1', '2', '3', '4'],
     ),
   ];
 

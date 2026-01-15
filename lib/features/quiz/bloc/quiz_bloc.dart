@@ -4,20 +4,21 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_learn/features/quiz/bloc/quiz_event.dart';
 import 'package:flutter_learn/features/quiz/bloc/quiz_state.dart';
 import 'package:flutter_learn/features/quiz/models/quiz.dart';
-import 'package:flutter_learn/features/quiz/services/quiz_service.dart';
+import 'package:flutter_learn/features/quiz/repository/quiz_repository.dart';
 
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
-  final QuizService _quizService;
+  final QuizRepository _quizRepository;
   static const int totalQuizTimeInSeconds = 600;
   Timer? _timer;
   QuizSession? lastSession;
 
-  QuizBloc(this._quizService) : super(QuizInitial()) {
+  QuizBloc(this._quizRepository) : super(QuizInitial()) {
     on<SessionStarted>(_onSessionStarted);
     on<AnswerSubmitted>(_onAnswerSubmitted);
     on<QuizSessionTimeUpdated>(_onTimeUpdated);
     on<QuizSessionSubmitted>(_onSessionSubmitted);
     on<QuizSessionTimeoutEvent>(_onSessionTimeout);
+    on<NextQuestionRequested>(_onNextQuestionRequested);
   }
 
   Future<void> _onSessionStarted(
@@ -30,7 +31,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
     emit(QuizLoading());
     try {
-      final quizzes = await _quizService.fetchRandomQuizzes(
+      final quizzes = await _quizRepository.getRandomQuizzes(
         event.numberOfQuestions,
       );
 
@@ -81,18 +82,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final updatedAnswerSheets = List<AnswerSheet>.from(
         currentState.answerSheets,
       )..add(event.answerSheet);
-      final nextIndex = currentState.currentIndex + 1;
-      if (nextIndex < currentState.quizzes.length) {
-        emit(
-          currentState.copyWith(
-            currentIndex: nextIndex,
-            answerSheets: updatedAnswerSheets,
-          ),
-        );
-      } else {
-        // nothing more to do, quiz ended
-        emit(currentState.copyWith(answerSheets: updatedAnswerSheets));
-      }
+       emit(currentState.copyWith(answerSheets: updatedAnswerSheets));
     }
   }
 
@@ -100,6 +90,17 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     if (state is QuizSession) {
       final currentState = state as QuizSession;
       emit(currentState.copyWith(remainingSeconds: event.remainingSeconds));
+    }
+  }
+  void _onNextQuestionRequested(NextQuestionRequested event, Emitter<QuizState> emit) {
+    if (state is QuizSession) {
+      final currentState = state as QuizSession;
+      final nextIndex = currentState.currentIndex + 1;
+      if (nextIndex < currentState.quizzes.length) {
+        emit(currentState.copyWith(currentIndex: nextIndex));
+      } else {
+        emit(currentState.copyWith(answerSheets: currentState.answerSheets));
+      }
     }
   }
 
@@ -110,10 +111,30 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     if (state is QuizSession) {
       final currentState = state as QuizSession;
       lastSession = currentState;
-      emit(QuizCompleted(currentState.answerSheets));
+      final correctAnswers = currentState.answerSheets
+          .where((answerSheet) => answerSheet.isCorrect)
+          .length;
+      emit(
+        QuizCompleted(
+          currentState.answerSheets,
+          correctAnswers,
+          currentState.answerSheets.length - correctAnswers,
+          currentState.answerSheets.length,
+        ),
+      );
     }
     if (state is QuizSessionTimeout && lastSession != null) {
-      emit(QuizCompleted(lastSession!.answerSheets));
+      final correctAnswers = lastSession!.answerSheets
+          .where((answerSheet) => answerSheet.isCorrect)
+          .length;
+      emit(
+        QuizCompleted(
+          lastSession!.answerSheets,
+          correctAnswers,
+          lastSession!.answerSheets.length - correctAnswers,
+          lastSession!.answerSheets.length,
+        ),
+      );
     }
     if (_timer != null) {
       _timer!.cancel();

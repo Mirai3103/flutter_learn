@@ -83,10 +83,8 @@ Map<String, dynamic> _$TrueOrFalseToJson(TrueOrFalse instance) =>
       'runtimeType': instance.$type,
     };
 
-_QuizOption _$QuizOptionFromJson(Map<String, dynamic> json) => _QuizOption(
-  id: (json['id'] as num).toInt(),
-  option: json['option'] as String,
-);
+_QuizOption _$QuizOptionFromJson(Map<String, dynamic> json) =>
+    _QuizOption(id: json['id'] as String, option: json['option'] as String);
 
 Map<String, dynamic> _$QuizOptionToJson(_QuizOption instance) =>
     <String, dynamic>{'id': instance.id, 'option': instance.option};

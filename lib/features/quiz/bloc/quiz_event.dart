@@ -15,6 +15,9 @@ class AnswerSubmitted extends QuizEvent {
   AnswerSubmitted({required this.answerSheet});
 }
 
+class NextQuestionRequested extends QuizEvent {
+  NextQuestionRequested();
+}     
 class QuizSessionTimeUpdated extends QuizEvent {
   final int remainingSeconds;
   QuizSessionTimeUpdated({required this.remainingSeconds});

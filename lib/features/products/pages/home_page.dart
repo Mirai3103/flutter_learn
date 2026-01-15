@@ -9,6 +9,7 @@ import 'package:flutter_learn/features/products/bloc/home.cubit.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/widgets/product_card.dart';
 import 'package:flutter_learn/routes/route_names.dart';
+import 'package:flutter_learn/shareds/widgets/MainScaffold.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MainScaffold(
       appBar: AppBar(
         title: _buildSearchBar(),
         actions: [

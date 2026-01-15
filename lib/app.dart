@@ -9,6 +9,9 @@ import 'package:flutter_learn/features/products/bloc/home.cubit.dart';
 import 'package:flutter_learn/features/products/repository/product_repository.dart';
 import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
+import 'package:flutter_learn/features/quiz/bloc/quiz_bloc.dart';
+import 'package:flutter_learn/features/quiz/repository/quiz_repository.dart';
+import 'package:flutter_learn/features/quiz/services/quiz_service.dart';
 import 'package:flutter_learn/routes/router.dart';
 import 'package:flutter_learn/shareds/api_client/graphql.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +24,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final productService = ProductService(graphQLClient: client.value);
     final productRepository = ProductRepository(productService: productService);
+    final quizService = QuizService();
+    final quizRepository = QuizRepository(quizService: quizService);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => CartBloc()),
@@ -32,6 +37,7 @@ class App extends StatelessWidget {
           },
         ),
         BlocProvider(create: (_) => HomeCubit(productRepository)..initialize()),
+        BlocProvider(create: (context) => QuizBloc(quizRepository)),
       ],
       child: Builder(
         builder: (context) {
@@ -43,6 +49,7 @@ class App extends StatelessWidget {
               title: 'Flutter Demo',
               theme: ThemeData(
                 primarySwatch: Colors.lightBlue,
+                useMaterial3: true  ,
                 textTheme: GoogleFonts.poppinsTextTheme(),
               ),
               routerConfig: router,

@@ -5,9 +5,11 @@ import 'package:flutter_learn/features/auth/pages/login.dart';
 import 'package:flutter_learn/features/bloc/auth.bloc.dart';
 import 'package:flutter_learn/features/bloc/auth.state.dart';
 import 'package:flutter_learn/features/cart/pages/cart_page.dart';
+import 'package:flutter_learn/features/course/page/home.dart';
 import 'package:flutter_learn/features/products/models/product_model.dart';
 import 'package:flutter_learn/features/products/pages/home_page.dart';
 import 'package:flutter_learn/features/products/pages/product_detail_page.dart';
+import 'package:flutter_learn/features/quiz/pages/quiz.dart';
 import 'package:flutter_learn/routes/route_names.dart';
 import 'package:go_router/go_router.dart';
 
@@ -62,6 +64,14 @@ GoRouter createRouter(AuthBloc authBloc) {
           final product = state.extra as ProductModel;
           return ProductDetailPage(product: product);
         },
+      ),
+      GoRoute(
+        path: RouteNames.course,
+        builder: (context, state) => const CourseHomePage(),
+      ),
+      GoRoute(
+        path: RouteNames.quiz,
+        builder: (context, state) => const QuizPage(),
       ),
     ],
   );
