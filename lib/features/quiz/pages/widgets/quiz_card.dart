@@ -85,14 +85,21 @@ class _QuizCardState extends State<QuizCard> {
                     return FilledButton(
                       onPressed: _isAnswered ? _handleNextQuestion : null,
                       style: FilledButton.styleFrom(
-                        backgroundColor: _isAnswered ? Theme.of(context).colorScheme.primary : Colors.grey[300],
+                        backgroundColor: _isAnswered
+                            ? Theme.of(context).colorScheme.primary
+                            : Colors.grey[300],
                       ),
-                      
+
                       child: const Text('Next Question'),
                     );
                   }
                   return FilledButton(
-                    onPressed: _handleSubmitQuiz,
+                    onPressed: _isAnswered ? _handleSubmitQuiz : null,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: _isAnswered
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.grey[300],
+                    ),
                     child: const Text('Submit Quiz'),
                   );
                 },
@@ -247,13 +254,13 @@ class _QuizCardState extends State<QuizCard> {
       selectedTrueOrFalse = null;
     });
   }
-  bool get _isAnswered {
-  return widget.quiz.map(
-    multipleChoiceMultipleAnswers: (_) => selectedMultipleAnswers.isNotEmpty,
-    multipleChoiceSingleAnswer: (_) => selectedSingleAnswer != null,
-    fillInTheBlank: (_) => fillInController.text.trim().isNotEmpty,
-    trueOrFalse: (_) => selectedTrueOrFalse != null,
-  );
-}
 
+  bool get _isAnswered {
+    return widget.quiz.map(
+      multipleChoiceMultipleAnswers: (_) => selectedMultipleAnswers.isNotEmpty,
+      multipleChoiceSingleAnswer: (_) => selectedSingleAnswer != null,
+      fillInTheBlank: (_) => fillInController.text.trim().isNotEmpty,
+      trueOrFalse: (_) => selectedTrueOrFalse != null,
+    );
+  }
 }
