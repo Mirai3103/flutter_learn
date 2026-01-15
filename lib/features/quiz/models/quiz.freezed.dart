@@ -684,10 +684,7 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _QuizOption():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -746,10 +743,7 @@ return $default(_that.id,_that.option);case _:
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String option)  $default,) {final _that = this;
 switch (_that) {
 case _QuizOption():
-return $default(_that.id,_that.option);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that.id,_that.option);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -839,6 +833,487 @@ class __$QuizOptionCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,option: null == option ? _self.option : option // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$AnswerSheet {
+
+ String get quizId;
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AnswerSheetCopyWith<AnswerSheet> get copyWith => _$AnswerSheetCopyWithImpl<AnswerSheet>(this as AnswerSheet, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnswerSheet&&(identical(other.quizId, quizId) || other.quizId == quizId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,quizId);
+
+@override
+String toString() {
+  return 'AnswerSheet(quizId: $quizId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $AnswerSheetCopyWith<$Res>  {
+  factory $AnswerSheetCopyWith(AnswerSheet value, $Res Function(AnswerSheet) _then) = _$AnswerSheetCopyWithImpl;
+@useResult
+$Res call({
+ String quizId
+});
+
+
+
+
+}
+/// @nodoc
+class _$AnswerSheetCopyWithImpl<$Res>
+    implements $AnswerSheetCopyWith<$Res> {
+  _$AnswerSheetCopyWithImpl(this._self, this._then);
+
+  final AnswerSheet _self;
+  final $Res Function(AnswerSheet) _then;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? quizId = null,}) {
+  return _then(_self.copyWith(
+quizId: null == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [AnswerSheet].
+extension AnswerSheetPatterns on AnswerSheet {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( MultipleChoiceWithMultipleAnswersAnswerSheet value)?  multipleChoiceMultipleAnswers,TResult Function( MultipleChoiceWithSingleAnswerAnswerSheet value)?  multipleChoiceSingleAnswer,TResult Function( FillInTheBlankAnswerSheet value)?  fillInTheBlank,TResult Function( TrueOrFalseAnswerSheet value)?  trueOrFalse,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case MultipleChoiceWithMultipleAnswersAnswerSheet() when multipleChoiceMultipleAnswers != null:
+return multipleChoiceMultipleAnswers(_that);case MultipleChoiceWithSingleAnswerAnswerSheet() when multipleChoiceSingleAnswer != null:
+return multipleChoiceSingleAnswer(_that);case FillInTheBlankAnswerSheet() when fillInTheBlank != null:
+return fillInTheBlank(_that);case TrueOrFalseAnswerSheet() when trueOrFalse != null:
+return trueOrFalse(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( MultipleChoiceWithMultipleAnswersAnswerSheet value)  multipleChoiceMultipleAnswers,required TResult Function( MultipleChoiceWithSingleAnswerAnswerSheet value)  multipleChoiceSingleAnswer,required TResult Function( FillInTheBlankAnswerSheet value)  fillInTheBlank,required TResult Function( TrueOrFalseAnswerSheet value)  trueOrFalse,}){
+final _that = this;
+switch (_that) {
+case MultipleChoiceWithMultipleAnswersAnswerSheet():
+return multipleChoiceMultipleAnswers(_that);case MultipleChoiceWithSingleAnswerAnswerSheet():
+return multipleChoiceSingleAnswer(_that);case FillInTheBlankAnswerSheet():
+return fillInTheBlank(_that);case TrueOrFalseAnswerSheet():
+return trueOrFalse(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( MultipleChoiceWithMultipleAnswersAnswerSheet value)?  multipleChoiceMultipleAnswers,TResult? Function( MultipleChoiceWithSingleAnswerAnswerSheet value)?  multipleChoiceSingleAnswer,TResult? Function( FillInTheBlankAnswerSheet value)?  fillInTheBlank,TResult? Function( TrueOrFalseAnswerSheet value)?  trueOrFalse,}){
+final _that = this;
+switch (_that) {
+case MultipleChoiceWithMultipleAnswersAnswerSheet() when multipleChoiceMultipleAnswers != null:
+return multipleChoiceMultipleAnswers(_that);case MultipleChoiceWithSingleAnswerAnswerSheet() when multipleChoiceSingleAnswer != null:
+return multipleChoiceSingleAnswer(_that);case FillInTheBlankAnswerSheet() when fillInTheBlank != null:
+return fillInTheBlank(_that);case TrueOrFalseAnswerSheet() when trueOrFalse != null:
+return trueOrFalse(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String quizId,  List<String> selectedAnswers)?  multipleChoiceMultipleAnswers,TResult Function( String quizId,  String selectedAnswer)?  multipleChoiceSingleAnswer,TResult Function( String quizId,  String answer)?  fillInTheBlank,TResult Function( String quizId,  bool answer)?  trueOrFalse,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case MultipleChoiceWithMultipleAnswersAnswerSheet() when multipleChoiceMultipleAnswers != null:
+return multipleChoiceMultipleAnswers(_that.quizId,_that.selectedAnswers);case MultipleChoiceWithSingleAnswerAnswerSheet() when multipleChoiceSingleAnswer != null:
+return multipleChoiceSingleAnswer(_that.quizId,_that.selectedAnswer);case FillInTheBlankAnswerSheet() when fillInTheBlank != null:
+return fillInTheBlank(_that.quizId,_that.answer);case TrueOrFalseAnswerSheet() when trueOrFalse != null:
+return trueOrFalse(_that.quizId,_that.answer);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String quizId,  List<String> selectedAnswers)  multipleChoiceMultipleAnswers,required TResult Function( String quizId,  String selectedAnswer)  multipleChoiceSingleAnswer,required TResult Function( String quizId,  String answer)  fillInTheBlank,required TResult Function( String quizId,  bool answer)  trueOrFalse,}) {final _that = this;
+switch (_that) {
+case MultipleChoiceWithMultipleAnswersAnswerSheet():
+return multipleChoiceMultipleAnswers(_that.quizId,_that.selectedAnswers);case MultipleChoiceWithSingleAnswerAnswerSheet():
+return multipleChoiceSingleAnswer(_that.quizId,_that.selectedAnswer);case FillInTheBlankAnswerSheet():
+return fillInTheBlank(_that.quizId,_that.answer);case TrueOrFalseAnswerSheet():
+return trueOrFalse(_that.quizId,_that.answer);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String quizId,  List<String> selectedAnswers)?  multipleChoiceMultipleAnswers,TResult? Function( String quizId,  String selectedAnswer)?  multipleChoiceSingleAnswer,TResult? Function( String quizId,  String answer)?  fillInTheBlank,TResult? Function( String quizId,  bool answer)?  trueOrFalse,}) {final _that = this;
+switch (_that) {
+case MultipleChoiceWithMultipleAnswersAnswerSheet() when multipleChoiceMultipleAnswers != null:
+return multipleChoiceMultipleAnswers(_that.quizId,_that.selectedAnswers);case MultipleChoiceWithSingleAnswerAnswerSheet() when multipleChoiceSingleAnswer != null:
+return multipleChoiceSingleAnswer(_that.quizId,_that.selectedAnswer);case FillInTheBlankAnswerSheet() when fillInTheBlank != null:
+return fillInTheBlank(_that.quizId,_that.answer);case TrueOrFalseAnswerSheet() when trueOrFalse != null:
+return trueOrFalse(_that.quizId,_that.answer);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class MultipleChoiceWithMultipleAnswersAnswerSheet implements AnswerSheet {
+  const MultipleChoiceWithMultipleAnswersAnswerSheet({required this.quizId, required final  List<String> selectedAnswers}): _selectedAnswers = selectedAnswers;
+  
+
+@override final  String quizId;
+ final  List<String> _selectedAnswers;
+ List<String> get selectedAnswers {
+  if (_selectedAnswers is EqualUnmodifiableListView) return _selectedAnswers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_selectedAnswers);
+}
+
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MultipleChoiceWithMultipleAnswersAnswerSheetCopyWith<MultipleChoiceWithMultipleAnswersAnswerSheet> get copyWith => _$MultipleChoiceWithMultipleAnswersAnswerSheetCopyWithImpl<MultipleChoiceWithMultipleAnswersAnswerSheet>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MultipleChoiceWithMultipleAnswersAnswerSheet&&(identical(other.quizId, quizId) || other.quizId == quizId)&&const DeepCollectionEquality().equals(other._selectedAnswers, _selectedAnswers));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,quizId,const DeepCollectionEquality().hash(_selectedAnswers));
+
+@override
+String toString() {
+  return 'AnswerSheet.multipleChoiceMultipleAnswers(quizId: $quizId, selectedAnswers: $selectedAnswers)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MultipleChoiceWithMultipleAnswersAnswerSheetCopyWith<$Res> implements $AnswerSheetCopyWith<$Res> {
+  factory $MultipleChoiceWithMultipleAnswersAnswerSheetCopyWith(MultipleChoiceWithMultipleAnswersAnswerSheet value, $Res Function(MultipleChoiceWithMultipleAnswersAnswerSheet) _then) = _$MultipleChoiceWithMultipleAnswersAnswerSheetCopyWithImpl;
+@override @useResult
+$Res call({
+ String quizId, List<String> selectedAnswers
+});
+
+
+
+
+}
+/// @nodoc
+class _$MultipleChoiceWithMultipleAnswersAnswerSheetCopyWithImpl<$Res>
+    implements $MultipleChoiceWithMultipleAnswersAnswerSheetCopyWith<$Res> {
+  _$MultipleChoiceWithMultipleAnswersAnswerSheetCopyWithImpl(this._self, this._then);
+
+  final MultipleChoiceWithMultipleAnswersAnswerSheet _self;
+  final $Res Function(MultipleChoiceWithMultipleAnswersAnswerSheet) _then;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? quizId = null,Object? selectedAnswers = null,}) {
+  return _then(MultipleChoiceWithMultipleAnswersAnswerSheet(
+quizId: null == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
+as String,selectedAnswers: null == selectedAnswers ? _self._selectedAnswers : selectedAnswers // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class MultipleChoiceWithSingleAnswerAnswerSheet implements AnswerSheet {
+  const MultipleChoiceWithSingleAnswerAnswerSheet({required this.quizId, required this.selectedAnswer});
+  
+
+@override final  String quizId;
+ final  String selectedAnswer;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MultipleChoiceWithSingleAnswerAnswerSheetCopyWith<MultipleChoiceWithSingleAnswerAnswerSheet> get copyWith => _$MultipleChoiceWithSingleAnswerAnswerSheetCopyWithImpl<MultipleChoiceWithSingleAnswerAnswerSheet>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MultipleChoiceWithSingleAnswerAnswerSheet&&(identical(other.quizId, quizId) || other.quizId == quizId)&&(identical(other.selectedAnswer, selectedAnswer) || other.selectedAnswer == selectedAnswer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,quizId,selectedAnswer);
+
+@override
+String toString() {
+  return 'AnswerSheet.multipleChoiceSingleAnswer(quizId: $quizId, selectedAnswer: $selectedAnswer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MultipleChoiceWithSingleAnswerAnswerSheetCopyWith<$Res> implements $AnswerSheetCopyWith<$Res> {
+  factory $MultipleChoiceWithSingleAnswerAnswerSheetCopyWith(MultipleChoiceWithSingleAnswerAnswerSheet value, $Res Function(MultipleChoiceWithSingleAnswerAnswerSheet) _then) = _$MultipleChoiceWithSingleAnswerAnswerSheetCopyWithImpl;
+@override @useResult
+$Res call({
+ String quizId, String selectedAnswer
+});
+
+
+
+
+}
+/// @nodoc
+class _$MultipleChoiceWithSingleAnswerAnswerSheetCopyWithImpl<$Res>
+    implements $MultipleChoiceWithSingleAnswerAnswerSheetCopyWith<$Res> {
+  _$MultipleChoiceWithSingleAnswerAnswerSheetCopyWithImpl(this._self, this._then);
+
+  final MultipleChoiceWithSingleAnswerAnswerSheet _self;
+  final $Res Function(MultipleChoiceWithSingleAnswerAnswerSheet) _then;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? quizId = null,Object? selectedAnswer = null,}) {
+  return _then(MultipleChoiceWithSingleAnswerAnswerSheet(
+quizId: null == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
+as String,selectedAnswer: null == selectedAnswer ? _self.selectedAnswer : selectedAnswer // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class FillInTheBlankAnswerSheet implements AnswerSheet {
+  const FillInTheBlankAnswerSheet({required this.quizId, required this.answer});
+  
+
+@override final  String quizId;
+ final  String answer;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FillInTheBlankAnswerSheetCopyWith<FillInTheBlankAnswerSheet> get copyWith => _$FillInTheBlankAnswerSheetCopyWithImpl<FillInTheBlankAnswerSheet>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FillInTheBlankAnswerSheet&&(identical(other.quizId, quizId) || other.quizId == quizId)&&(identical(other.answer, answer) || other.answer == answer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,quizId,answer);
+
+@override
+String toString() {
+  return 'AnswerSheet.fillInTheBlank(quizId: $quizId, answer: $answer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $FillInTheBlankAnswerSheetCopyWith<$Res> implements $AnswerSheetCopyWith<$Res> {
+  factory $FillInTheBlankAnswerSheetCopyWith(FillInTheBlankAnswerSheet value, $Res Function(FillInTheBlankAnswerSheet) _then) = _$FillInTheBlankAnswerSheetCopyWithImpl;
+@override @useResult
+$Res call({
+ String quizId, String answer
+});
+
+
+
+
+}
+/// @nodoc
+class _$FillInTheBlankAnswerSheetCopyWithImpl<$Res>
+    implements $FillInTheBlankAnswerSheetCopyWith<$Res> {
+  _$FillInTheBlankAnswerSheetCopyWithImpl(this._self, this._then);
+
+  final FillInTheBlankAnswerSheet _self;
+  final $Res Function(FillInTheBlankAnswerSheet) _then;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? quizId = null,Object? answer = null,}) {
+  return _then(FillInTheBlankAnswerSheet(
+quizId: null == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
+as String,answer: null == answer ? _self.answer : answer // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class TrueOrFalseAnswerSheet implements AnswerSheet {
+  const TrueOrFalseAnswerSheet({required this.quizId, required this.answer});
+  
+
+@override final  String quizId;
+ final  bool answer;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TrueOrFalseAnswerSheetCopyWith<TrueOrFalseAnswerSheet> get copyWith => _$TrueOrFalseAnswerSheetCopyWithImpl<TrueOrFalseAnswerSheet>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrueOrFalseAnswerSheet&&(identical(other.quizId, quizId) || other.quizId == quizId)&&(identical(other.answer, answer) || other.answer == answer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,quizId,answer);
+
+@override
+String toString() {
+  return 'AnswerSheet.trueOrFalse(quizId: $quizId, answer: $answer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TrueOrFalseAnswerSheetCopyWith<$Res> implements $AnswerSheetCopyWith<$Res> {
+  factory $TrueOrFalseAnswerSheetCopyWith(TrueOrFalseAnswerSheet value, $Res Function(TrueOrFalseAnswerSheet) _then) = _$TrueOrFalseAnswerSheetCopyWithImpl;
+@override @useResult
+$Res call({
+ String quizId, bool answer
+});
+
+
+
+
+}
+/// @nodoc
+class _$TrueOrFalseAnswerSheetCopyWithImpl<$Res>
+    implements $TrueOrFalseAnswerSheetCopyWith<$Res> {
+  _$TrueOrFalseAnswerSheetCopyWithImpl(this._self, this._then);
+
+  final TrueOrFalseAnswerSheet _self;
+  final $Res Function(TrueOrFalseAnswerSheet) _then;
+
+/// Create a copy of AnswerSheet
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? quizId = null,Object? answer = null,}) {
+  return _then(TrueOrFalseAnswerSheet(
+quizId: null == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
+as String,answer: null == answer ? _self.answer : answer // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

@@ -44,3 +44,26 @@ sealed class QuizOption with _$QuizOption {
   factory QuizOption.fromJson(Map<String, dynamic> json) =>
       _$QuizOptionFromJson(json);
 }
+
+@freezed
+sealed class AnswerSheet with _$AnswerSheet {
+  const factory AnswerSheet.multipleChoiceMultipleAnswers({
+    required String quizId,
+    required List<String> selectedAnswers,
+  }) = MultipleChoiceWithMultipleAnswersAnswerSheet;
+
+  const factory AnswerSheet.multipleChoiceSingleAnswer({
+    required String quizId,
+    required String selectedAnswer,
+  }) = MultipleChoiceWithSingleAnswerAnswerSheet;
+
+  const factory AnswerSheet.fillInTheBlank({
+    required String quizId,
+    required String answer,
+  }) = FillInTheBlankAnswerSheet;
+
+  const factory AnswerSheet.trueOrFalse({
+    required String quizId,
+    required bool answer,
+  }) = TrueOrFalseAnswerSheet;
+}
