@@ -52,7 +52,7 @@ class CartItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '\$${item.product.price.toStringAsFixed(2)}',
+                    '\$${item.product.price}',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class CartItem extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '\$${item.totalPrice.toStringAsFixed(2)}',
+                  '\$${item.totalPrice}',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

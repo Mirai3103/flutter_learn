@@ -11,6 +11,7 @@ import 'package:flutter_learn/features/products/services/product_service.dart';
 import 'package:flutter_learn/features/products/viewmodels/product_detail_vm.dart';
 import 'package:flutter_learn/routes/router.dart';
 import 'package:flutter_learn/shareds/api_client/graphql.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -40,7 +41,10 @@ class App extends StatelessWidget {
             create: (_) => ProductDetailVm(),
             builder: (context, child) => MaterialApp.router(
               title: 'Flutter Demo',
-              theme: ThemeData(primarySwatch: Colors.indigo),
+              theme: ThemeData(
+                primarySwatch: Colors.lightBlue,
+                textTheme: GoogleFonts.poppinsTextTheme(),
+              ),
               routerConfig: router,
             ),
           );

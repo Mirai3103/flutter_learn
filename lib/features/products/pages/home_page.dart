@@ -90,6 +90,12 @@ class _HomePageState extends State<HomePage> {
               context.read<AuthBloc>().add(LogoutEvent());
             },
           ),
+          IconButton(
+            onPressed: () {
+              context.go(RouteNames.course);
+            },
+            icon: const Icon(Icons.school),
+          ),
         ],
       ),
       body: BlocBuilder<HomeCubit, HomeState>(

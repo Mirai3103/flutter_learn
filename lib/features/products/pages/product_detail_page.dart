@@ -74,7 +74,7 @@ class ProductDetailPage extends StatelessWidget {
 
   Widget _buildPrice() {
     return Text(
-      '\$${product.price.toStringAsFixed(2)}',
+      '\$${product.price}',
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
